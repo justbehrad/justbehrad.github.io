@@ -37,10 +37,12 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
-        .card-bg.clickable:hover {
+        .card-bg:hover {
             background-color: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-5px);
+        }
+        .card-bg.clickable:hover {
             cursor: pointer;
         }
         .btn-primary {
@@ -427,6 +429,7 @@ void printGreeting(char name[]) {
                 },
                 'guess-the-number': {
                     title: 'Project: Guess the Number',
+                    description: 'A classic beginner project. Learn about variables, loops, and conditional logic.',
                     filename: 'guess_game.c',
                     content: `<p>This project is a perfect introduction to programming concepts. We'll create a game where the computer thinks of a number, and the player has to guess it. The program will give hints of "Too high" or "Too low".</p><h4>Step 1: Includes and Setup</h4><p>First, we need to include the necessary libraries. <code>stdio.h</code> is for standard input/output (like <code>printf</code> and <code>scanf</code>). <code>stdlib.h</code> is for generating random numbers (<code>rand</code> and <code>srand</code>). <code>time.h</code> is used to get the current time to seed our random number generator, making it different each time we run the program.</p><pre><code>#include &lt;stdio.h&gt;\n#include &lt;stdlib.h&gt;\n#include &lt;time.h&gt;</code></pre><h4>Step 2: Generating a Random Number</h4><p>Inside <code>main</code>, we first need to "seed" the random number generator. Using <code>srand(time(0))</code> ensures that our sequence of random numbers is different every time the game is played. Then, we use <code>rand() % 100 + 1</code> to get a random number between 1 and 100.</p><pre><code>srand(time(0)); \nint randomNumber = (rand() % 100) + 1;\nint userGuess = 0;</code></pre><h4>Step 3: The Game Loop</h4><p>We need a loop that continues as long as the user's guess is not correct. A <code>while</code> loop is perfect for this. Inside the loop, we prompt the user, get their input using <code>scanf</code>, and then use an <code>if-else if-else</code> chain to compare their guess to the secret number and provide feedback.</p><pre><code>while (userGuess != randomNumber) {\n    printf("Enter your guess: ");\n    scanf("%d", &userGuess);\n\n    if (userGuess > randomNumber) {\n        printf("Too high! Try again.\\n");\n    } else if (userGuess < randomNumber) {\n        printf("Too low! Try again.\\n");\n    } else {\n        printf("Congratulations! You guessed it!\\n");\n    }\n}</code></pre><p>Below is the complete, final code for the game.</p>`,
                     code: `
@@ -456,6 +459,7 @@ int main() {
                 },
                 'tic-tac-toe': {
                     title: 'Project: Console Tic-Tac-Toe',
+                    description: 'Create a two-player Tic-Tac-Toe game. Learn about arrays and functions.',
                     filename: 'tictactoe.c',
                     content: `<p>This project builds a two-player Tic-Tac-Toe game that runs in the console. It's a great way to learn about 2D arrays and breaking your program into functions.</p><h4>Step 1: Setup and The Game Board</h4><p>We'll represent the game board using a 2D char array. A 3x3 array is perfect. We initialize it with numbers '1' through '9' to show the players which positions they can choose.</p><pre><code>#include &lt;stdio.h&gt;\n\nchar board[3][3] = {\n    {'1', '2', '3'},\n    {'4', '5', '6'},\n    {'7', '8', '9'}\n};</code></pre><h4>Step 2: The <code>printBoard</code> Function</h4><p>A function to print the board makes our code much cleaner. This function takes the 2D array as a parameter and prints it in a user-friendly format.</p><pre><code>void printBoard(char board[3][3]) {\n    printf("\\n  %c | %c | %c \\n", board[0][0], board[0][1], board[0][2]);\n    printf(" ---|---|---\\n");\n    printf("  %c | %c | %c \\n", board[1][0], board[1][1], board[1][2]);\n    printf(" ---|---|---\\n");\n    printf("  %c | %c | %c \\n\\n", board[2][0], board[2][1], board[2][2]);\n}</code></pre><h4>Step 3: The Game Loop and Player Input</h4><p>In <code>main</code>, we'll use a <code>do-while</code> loop to keep the game running. Inside, we determine whose turn it is (Player 1 or 2), get their choice with <code>scanf</code>, and calculate the corresponding row and column for the array. We also add checks to make sure the move is valid.</p><h4>Step 4: Checking for a Winner</h4><p>This is the most complex part. We need a function, <code>checkWin</code>, that checks all possible winning conditions: all three rows, all three columns, and both diagonals. It should return 1 for a win, 0 for a draw, and -1 if the game is still ongoing.</p><p>Below is the complete, final code for the game.</p>`,
                     code: `
@@ -507,6 +511,7 @@ int checkWin(char board[3][3]) {
                 },
                 'text-adventure': {
                     title: 'Project: Simple Text Adventure',
+                    description: 'Build a "choose your own adventure" game. A great way to practice strings and program flow.',
                     filename: 'adventure.c',
                     content: `<p>This project builds a very basic "choose your own adventure" game. It's an excellent way to practice nested <code>if-else</code> statements to create branching paths in your story.</p><h4>Step 1: The First Choice</h4><p>The game starts by presenting the player with a scenario and two choices. We store their decision in an integer variable called <code>choice1</code> using <code>scanf</code>.</p><h4>Step 2: Branching with <code>if-else</code></h4><p>We use a large <code>if-else if-else</code> structure to handle the player's first choice. If they choose 1, the game ends with a safe outcome. If they choose 2, we move to the next step. An <code>else</code> at the end handles any invalid input.</p><h4>Step 3: Nested Conditionals for the Second Choice</h4><p>Inside the <code>else if (choice1 == 2)</code> block, we create another, nested story branch. We present a new scenario and get a new input, <code>choice2</code>. Another <code>if-else</code> block inside the first one determines the final outcome of this path.</p><p>This nesting of conditional statements is what creates the branching narrative. Below is the complete code.</p>`,
                     code: `
@@ -548,6 +553,7 @@ int main() {
                 },
                 'simple-calculator': {
                     title: 'Project: Simple Calculator',
+                    description: 'Perform basic arithmetic operations using a switch statement.',
                     filename: 'calculator.c',
                     content: `<p>This project creates a basic command-line calculator. It's a great way to practice getting different types of user input (numbers and characters) and using a <code>switch</code> statement to handle different cases.</p><h4>Step 1: Getting User Input</h4><p>We need to ask the user for three things: two numbers and an operator. We'll use <code>double</code> for the numbers to allow for decimal points, and a <code>char</code> for the operator (+, -, *, /).</p><pre><code>char operator;\ndouble n1, n2;\n\nprintf("Enter an operator (+, -, *, /): ");\nscanf("%c", &operator);\n\nprintf("Enter two operands: ");\nscanf("%lf %lf", &n1, &n2);</code></pre><h4>Step 2: The <code>switch</code> Statement</h4><p>A <code>switch</code> statement is perfect for this task. We check the value of the <code>operator</code> variable and provide a case for each valid operator. The <code>default</code> case handles any invalid operator the user might enter.</p><h4>Step 3: Handling Division by Zero</h4><p>Inside the case for division, it's important to check if the second number (the divisor) is zero. Dividing by zero is an undefined operation in mathematics and will cause an error in your program. We add an <code>if</code> statement to handle this specific scenario gracefully.</p>`,
                     code: `
@@ -586,6 +592,7 @@ int main() {
                 },
                 'rock-paper-scissors': {
                     title: 'Project: Rock, Paper, Scissors',
+                    description: 'Code the classic game against the computer. Practice random numbers.',
                     filename: 'rps.c',
                     content: `<p>Let's build the classic game of Rock, Paper, Scissors against the computer. This project will reinforce your understanding of random number generation and complex conditional logic with <code>if-else</code> statements.</p><h4>Step 1: Computer's Choice</h4><p>We'll use <code>rand()</code> to generate a number from 0 to 2, where 0 represents Rock, 1 represents Paper, and 2 represents Scissors. Remember to seed the random number generator with <code>srand(time(0))</code> to get different results each time.</p><h4>Step 2: Player's Choice</h4><p>We'll prompt the player to enter their choice. We can take this as an integer or a character. An integer is often simpler to compare.</p><h4>Step 3: Determining the Winner</h4><p>This is the core logic. We first check for a draw. If it's not a draw, we use a series of <code>else if</code> statements to check all the winning conditions for the player (e.g., player chose Rock and computer chose Scissors). If none of those are true, the player must have lost.</p>`,
                     code: `
@@ -620,6 +627,7 @@ int main() {
                 },
                 'contact-book': {
                     title: 'Project: Simple Contact Book',
+                    description: 'Manage contacts using structs and save them to a file. Learn about file I/O.',
                     filename: 'contacts.c',
                     content: `<p>This intermediate project introduces two very important concepts: <code>structs</code> for organizing data and file I/O for making that data persistent (saving it).</p><h4>Step 1: The Contact <code>struct</code></h4><p>A <code>struct</code> (or structure) is a collection of variables under a single name. It's perfect for grouping related data. We will define a struct to hold a contact's name and phone number.</p><pre><code>struct Contact {\n    char name[50];\n    char phone[15];\n};</code></pre><h4>Step 2: Adding a Contact</h4><p>We'll create a function that takes a pointer to a <code>Contact</code> struct. It will prompt the user to enter a name and phone number, which are stored in the struct's members.</p><h4>Step 3: Saving to a File</h4><p>This is the key to making our program useful. We use <code>fopen("contacts.txt", "a")</code> to open a file named "contacts.txt" in <strong>append mode</strong>. Append mode means we add to the end of the file without erasing existing content. We then use <code>fprintf</code> (file printf) to write the contact details to the file, and finally, we close it with <code>fclose</code>. It's crucial to close the file to ensure data is saved correctly.</p><p>This example focuses on adding and saving. A more advanced version would also load contacts from the file when the program starts.</p>`,
                     code: `
@@ -661,6 +669,7 @@ int main() {
                 },
                 'hangman': {
                     title: 'Project: Hangman Game',
+                    description: 'Build the classic word-guessing game. Involves arrays, strings, and loops.',
                     filename: 'hangman.c',
                     content: `<p>This is a more advanced project that combines arrays, strings, loops, and complex logic to create the classic word-guessing game, Hangman.</p><h4>Step 1: Game Setup</h4><p>We need several variables: the secret word, an array to show the player's progress (initially filled with underscores), the number of wrong guesses allowed, and an array to keep track of letters already guessed.</p><h4>Step 2: The Main Game Loop</h4><p>The game continues as long as the player has guesses left AND they haven't guessed the full word yet. A <code>while</code> loop is perfect for this.</p><h4>Step 3: Displaying Progress</h4><p>Inside the loop, we first print the current state of the word (e.g., <code>_ P P _ _</code>) and the number of wrong guesses remaining.</p><h4>Step 4: Handling a Guess</h4><p>We get a character guess from the player. We then loop through the secret word. If the guessed letter is found, we update our display array at the correct positions. We also set a flag to know the guess was correct. If the flag is still false after checking the whole word, the guess was wrong, and we decrement the remaining lives.</p><h4>Step 5: Win/Loss Condition</h4><p>After the loop ends, we check why it ended. If the player has no more lives, they lose. Otherwise, they must have guessed the word, and they win!</p>`,
                     code: `
@@ -866,6 +875,7 @@ void printGreeting(char name[]) {
                 },
                 'guess-the-number': {
                     title: 'پروژه: حدس عدد',
+                    description: 'یک پروژه کلاسیک برای مبتدیان. با متغیرها، حلقه‌ها و منطق شرطی آشنا شوید.',
                     filename: 'guess_game.c',
                     content: `<p>این پروژه یک مقدمه عالی برای مفاهیم برنامه‌نویسی است. ما یک بازی می‌سازیم که در آن کامپیوتر به یک عدد فکر می‌کند و بازیکن باید آن را حدس بزند. برنامه راهنمایی‌هایی مانند "بیشتر" یا "کمتر" ارائه می‌دهد.</p><h4>مرحله ۱: کتابخانه‌ها و تنظیمات اولیه</h4><p>ابتدا، باید کتابخانه‌های لازم را اضافه کنیم. <code>stdio.h</code> برای ورودی/خروجی استاندارد (مانند <code>printf</code> و <code>scanf</code>) است. <code>stdlib.h</code> برای تولید اعداد تصادفی (<code>rand</code> و <code>srand</code>) است. <code>time.h</code> برای گرفتن زمان فعلی برای مقداردهی اولیه مولد اعداد تصادفی ما استفاده می‌شود تا هر بار که برنامه را اجرا می‌کنیم متفاوت باشد.</p><h4>مرحله ۲: تولید عدد تصادفی</h4><p>در داخل <code>main</code>، ابتدا باید مولد اعداد تصادفی را "مقداردهی اولیه" کنیم. استفاده از <code>srand(time(0))</code> تضمین می‌کند که دنباله اعداد تصادفی ما هر بار که بازی انجام می‌شود متفاوت باشد. سپس، از <code>rand() % 100 + 1</code> برای گرفتن یک عدد تصادفی بین ۱ تا ۱۰۰ استفاده می‌کنیم.</p><h4>مرحله ۳: حلقه بازی</h4><p>ما به یک حلقه نیاز داریم که تا زمانی که حدس کاربر صحیح نباشد ادامه یابد. یک حلقه <code>while</code> برای این کار عالی است. در داخل حلقه، ما از کاربر درخواست می‌کنیم، ورودی او را با <code>scanf</code> دریافت می‌کنیم، و سپس از یک زنجیره <code>if-else if-else</code> برای مقایسه حدس او با عدد مخفی و ارائه بازخورد استفاده می‌کنیم.</p><p>در زیر کد کامل و نهایی بازی آمده است.</p>`,
                     code: `
@@ -895,6 +905,7 @@ int main() {
                 },
                 'tic-tac-toe': {
                     title: 'پروژه: دوز (XO) در کنسول',
+                    description: 'یک بازی دوز دو نفره بسازید. با آرایه‌ها و توابع آشنا شوید.',
                     filename: 'tictactoe.c',
                     content: `<p>این پروژه یک بازی دوز دو نفره می‌سازد که در کنسول اجرا می‌شود. این یک راه عالی برای یادگیری آرایه‌های دو بعدی و تقسیم برنامه به توابع است.</p><h4>مرحله ۱: تنظیمات و صفحه بازی</h4><p>ما صفحه بازی را با استفاده از یک آرایه دو بعدی از نوع char نمایش می‌دهیم. یک آرایه 3x3 عالی است. ما آن را با اعداد '1' تا '9' مقداردهی اولیه می‌کنیم تا به بازیکنان نشان دهیم کدام موقعیت‌ها را می‌توانند انتخاب کنند.</p><h4>مرحله ۲: تابع <code>printBoard</code></h4><p>یک تابع برای چاپ صفحه بازی کد ما را بسیار تمیزتر می‌کند. این تابع آرایه دو بعدی را به عنوان پارامتر می‌گیرد و آن را در یک قالب کاربرپسند چاپ می‌کند.</p><h4>مرحله ۳: حلقه بازی و ورودی بازیکن</h4><p>در <code>main</code>، ما از یک حلقه <code>do-while</code> برای ادامه بازی استفاده خواهیم کرد. در داخل، ما تعیین می‌کنیم نوبت کیست (بازیکن ۱ یا ۲)، انتخاب آنها را با <code>scanf</code> دریافت می‌کنیم و ردیف و ستون مربوطه را برای آرایه محاسبه می‌کنیم. ما همچنین بررسی‌هایی را برای اطمینان از معتبر بودن حرکت اضافه می‌کنیم.</p><h4>مرحله ۴: بررسی برنده</h4><p>این پیچیده‌ترین بخش است. ما به یک تابع به نام <code>checkWin</code> نیاز داریم که تمام شرایط ممکن برای برنده شدن را بررسی کند: هر سه ردیف، هر سه ستون و هر دو قطر. این تابع باید برای برد ۱، برای مساوی ۰ و اگر بازی هنوز ادامه دارد -۱ را برگرداند.</p><p>در زیر کد کامل و نهایی بازی آمده است.</p>`,
                     code: `
@@ -946,6 +957,7 @@ int checkWin(char board[3][3]) {
                 },
                  'text-adventure': {
                     title: 'پروژه: ماجراجویی متنی ساده',
+                    description: 'یک بازی "ماجراجویی خودت را انتخاب کن" بسازید. راهی عالی برای تمرین رشته‌ها و جریان برنامه.',
                     filename: 'adventure.c',
                     content: `<p>این پروژه یک بازی بسیار ابتدایی "ماجراجویی خودت را انتخاب کن" می‌سازد. این یک راه عالی برای تمرین دستورات تو در توی <code>if-else</code> برای ایجاد مسیرهای انشعابی در داستان شماست.</p><h4>مرحله ۱: اولین انتخاب</h4><p>بازی با ارائه یک سناریو و دو انتخاب به بازیکن شروع می‌شود. ما تصمیم آنها را در یک متغیر صحیح به نام <code>choice1</code> با استفاده از <code>scanf</code> ذخیره می‌کنیم.</p><h4>مرحله ۲: انشعاب با <code>if-else</code></h4><p>ما از یک ساختار بزرگ <code>if-else if-else</code> برای مدیریت اولین انتخاب بازیکن استفاده می‌کنیم. اگر او ۱ را انتخاب کند، بازی با یک نتیجه امن به پایان می‌رسد. اگر ۲ را انتخاب کند، به مرحله بعد می‌رویم. یک <code>else</code> در انتها هر ورودی نامعتبر را مدیریت می‌کند.</p><h4>مرحله ۳: شرط‌های تو در تو برای انتخاب دوم</h4><p>در داخل بلوک <code>else if (choice1 == 2)</code>، ما یک شاخه داستانی تو در توی دیگر ایجاد می‌کنیم. ما یک سناریوی جدید ارائه می‌دهیم و یک ورودی جدید، <code>choice2</code>، دریافت می‌کنیم. یک بلوک <code>if-else</code> دیگر در داخل بلوک اول، نتیجه نهایی این مسیر را تعیین می‌کند.</p><p>این تودرتویی دستورات شرطی است که روایت انشعابی را ایجاد می‌کند. در زیر کد کامل آمده است.</p>`,
                     code: `
@@ -985,6 +997,7 @@ int main() {
                 },
                 'simple-calculator': {
                     title: 'پروژه: ماشین حساب ساده',
+                    description: 'عملیات اصلی ریاضی را با استفاده از دستور سوییچ انجام دهید.',
                     filename: 'calculator.c',
                     content: `<p>این پروژه یک ماشین حساب خط فرمان ساده ایجاد می‌کند. این یک راه عالی برای تمرین گرفتن انواع مختلف ورودی کاربر (اعداد و کاراکترها) و استفاده از دستور <code>switch</code> برای مدیریت موارد مختلف است.</p><h4>مرحله ۱: گرفتن ورودی کاربر</h4><p>ما باید سه چیز از کاربر بپرسیم: دو عدد و یک عملگر. ما از <code>double</code> برای اعداد استفاده خواهیم کرد تا امکان استفاده از اعداد اعشاری وجود داشته باشد و از <code>char</code> برای عملگر (+، -، *، /) استفاده می‌کنیم.</p><h4>مرحله ۲: دستور <code>switch</code></h4><p>یک دستور <code>switch</code> برای این کار عالی است. ما مقدار متغیر <code>operator</code> را بررسی می‌کنیم و برای هر عملگر معتبر یک مورد ارائه می‌دهیم. مورد <code>default</code> هر عملگر نامعتبر دیگری را که کاربر ممکن است وارد کند، مدیریت می‌کند.</p><h4>مرحله ۳: مدیریت تقسیم بر صفر</h4><p>در داخل مورد مربوط به تقسیم، مهم است که بررسی کنیم آیا عدد دوم (مقسوم علیه) صفر است یا خیر. تقسیم بر صفر یک عملیات تعریف نشده در ریاضیات است و باعث خطا در برنامه شما می‌شود. ما یک دستور <code>if</code> برای مدیریت این سناریوی خاص به صورت زیبا اضافه می‌کنیم.</p>`,
                     code: `
@@ -1023,6 +1036,7 @@ int main() {
                 },
                 'rock-paper-scissors': {
                     title: 'پروژه: سنگ، کاغذ، قیچی',
+                    description: 'بازی کلاسیک را در برابر کامپیوتر کدنویسی کنید. اعداد تصادفی را تمرین کنید.',
                     filename: 'rps.c',
                     content: `<p>بیایید بازی کلاسیک سنگ، کاغذ، قیچی را در برابر کامپیوتر بسازیم. این پروژه درک شما از تولید اعداد تصادفی و منطق شرطی پیچیده با دستورات <code>if-else</code> را تقویت می‌کند.</p><h4>مرحله ۱: انتخاب کامپیوتر</h4><p>ما از <code>rand()</code> برای تولید یک عدد از ۰ تا ۲ استفاده خواهیم کرد، جایی که ۰ نشان دهنده سنگ، ۱ نشان دهنده کاغذ و ۲ نشان دهنده قیچی است. به یاد داشته باشید که مولد اعداد تصادفی را با <code>srand(time(0))</code> مقداردهی اولیه کنید تا هر بار نتایج متفاوتی بگیرید.</p><h4>مرحله ۲: انتخاب بازیکن</h4><p>ما از بازیکن می‌خواهیم که انتخاب خود را وارد کند. می‌توانیم این را به عنوان یک عدد صحیح یا یک کاراکتر بگیریم. مقایسه یک عدد صحیح اغلب ساده‌تر است.</p><h4>مرحله ۳: تعیین برنده</h4><p>این منطق اصلی است. ما ابتدا تساوی را بررسی می‌کنیم. اگر مساوی نبود، از یک سری دستورات <code>else if</code> برای بررسی تمام شرایط برنده شدن برای بازیکن استفاده می‌کنیم (مثلاً بازیکن سنگ را انتخاب کرده و کامپیوتر قیچی را). اگر هیچ یک از اینها درست نباشد، بازیکن باید باخته باشد.</p>`,
                     code: `
@@ -1057,6 +1071,7 @@ int main() {
                 },
                 'contact-book': {
                     title: 'پروژه: دفترچه تلفن ساده',
+                    description: 'مخاطبین را با struct مدیریت کرده و در فایل ذخیره کنید. با ورودی/خروجی فایل آشنا شوید.',
                     filename: 'contacts.c',
                     content: `<p>این پروژه متوسط دو مفهوم بسیار مهم را معرفی می‌کند: <code>struct</code> برای سازماندهی داده‌ها و ورودی/خروجی فایل برای پایدار کردن آن داده‌ها (ذخیره کردن آن).</p><h4>مرحله ۱: <code>struct</code> مخاطب</h4><p>یک <code>struct</code> (یا ساختار) مجموعه‌ای از متغیرها تحت یک نام واحد است. برای گروه‌بندی داده‌های مرتبط عالی است. ما یک ساختار برای نگهداری نام و شماره تلفن یک مخاطب تعریف خواهیم کرد.</p><h4>مرحله ۲: افزودن مخاطب</h4><p>ما یک تابع ایجاد خواهیم کرد که یک اشاره‌گر به یک ساختار <code>Contact</code> می‌گیرد. این تابع از کاربر می‌خواهد نام و شماره تلفن را وارد کند که در اعضای ساختار ذخیره می‌شوند.</p><h4>مرحله ۳: ذخیره در فایل</h4><p>این کلید مفید کردن برنامه ما است. ما از <code>fopen("contacts.txt", "a")</code> برای باز کردن فایلی به نام "contacts.txt" در حالت <strong>الحاق</strong> استفاده می‌کنیم. حالت الحاق به این معنی است که ما به انتهای فایل اضافه می‌کنیم بدون اینکه محتوای موجود را پاک کنیم. سپس از <code>fprintf</code> (printf فایل) برای نوشتن جزئیات مخاطب در فایل استفاده می‌کنیم و در نهایت، آن را با <code>fclose</code> می‌بندیم. بستن فایل برای اطمینان از ذخیره صحیح داده‌ها بسیار مهم است.</p>`,
                     code: `
@@ -1095,6 +1110,7 @@ int main() {
                 },
                 'hangman': {
                     title: 'پروژه: بازی هنگمن',
+                    description: 'بازی کلاسیک حدس کلمه را بسازید. شامل آرایه‌ها، رشته‌ها و حلقه‌ها می‌شود.',
                     filename: 'hangman.c',
                     content: `<p>این یک پروژه پیشرفته‌تر است که آرایه‌ها، رشته‌ها، حلقه‌ها و منطق پیچیده را برای ایجاد بازی کلاسیک حدس کلمه، هنگمن، ترکیب می‌کند.</p><h4>مرحله ۱: تنظیمات بازی</h4><p>ما به چندین متغیر نیاز داریم: کلمه مخفی، یک آرایه برای نشان دادن پیشرفت بازیکن (در ابتدا با خط تیره پر شده)، تعداد حدس‌های اشتباه مجاز، و یک آرایه برای پیگیری حروفی که قبلاً حدس زده شده‌اند.</p><h4>مرحله ۲: حلقه اصلی بازی</h4><p>بازی تا زمانی ادامه می‌یابد که بازیکن هنوز حدس داشته باشد و کلمه کامل را حدس نزده باشد. یک حلقه <code>while</code> برای این کار عالی است.</p><h4>مرحله ۳: نمایش پیشرفت</h4><p>در داخل حلقه، ما ابتدا وضعیت فعلی کلمه (مثلاً <code>_ P P _ _</code>) و تعداد حدس‌های اشتباه باقی‌مانده را چاپ می‌کنیم.</p><h4>مرحله ۴: مدیریت یک حدس</h4><p>ما یک حدس کاراکتری از بازیکن دریافت می‌کنیم. سپس در کلمه مخفی حلقه می‌زنیم. اگر حرف حدس زده شده پیدا شد، آرایه نمایش خود را در موقعیت‌های صحیح به‌روز می‌کنیم. ما همچنین یک پرچم برای دانستن اینکه حدس درست بوده است تنظیم می‌کنیم. اگر پرچم پس از بررسی کل کلمه هنوز نادرست باشد، حدس اشتباه بوده و ما جان‌های باقی‌مانده را کاهش می‌دهیم.</p><h4>مرحله ۵: شرط برد/باخت</h4><p>پس از پایان حلقه، ما بررسی می‌کنیم که چرا به پایان رسیده است. اگر بازیکن دیگر جانی نداشته باشد، می‌بازد. در غیر این صورت، او باید کلمه را حدس زده باشد و برنده می‌شود!</p>`,
                     code: `
@@ -1282,6 +1298,12 @@ int main() {
                 'text-adventure': 'map', 'contact-book': 'book-open', 'caesar-cipher': 'lock', 'number-to-words': 'repeat',
                 'hangman': 'user-x', 'banking-system': 'dollar-sign'
             };
+            
+            const colorMap = {
+                'guess-the-number': 'sky', 'tic-tac-toe': 'indigo', 'simple-calculator': 'rose', 'rock-paper-scissors': 'cyan', 'digital-clock': 'blue',
+                'text-adventure': 'amber', 'contact-book': 'lime', 'caesar-cipher': 'orange', 'number-to-words': 'teal',
+                'hangman': 'fuchsia', 'banking-system': 'emerald'
+            };
 
             projects.forEach(key => {
                 const projectDifficulty = difficultyMap[key] || 'beginner';
@@ -1292,14 +1314,15 @@ int main() {
                 const projectEn = contentData.en[key];
                 const projectFa = contentData.fa[key];
                 const icon = iconMap[key] || 'code';
+                const color = colorMap[key] || 'slate';
                 
                 const card = document.createElement('div');
                 card.className = 'card-bg rounded-xl p-8 flex flex-col';
                 card.innerHTML = `
                     <div class="flex-grow">
-                        <div class="w-12 h-12 mb-4 bg-slate-700/50 text-slate-300 rounded-lg flex items-center justify-center"><i data-feather="${icon}"></i></div>
+                        <div class="w-12 h-12 mb-4 bg-${color}-500/10 text-${color}-400 rounded-lg flex items-center justify-center"><i data-feather="${icon}"></i></div>
                         <h3 class="text-xl font-bold mb-2"><span class="lang en">${projectEn.title.replace('Project: ', '')}</span><span class="lang fa hidden">${projectFa.title.replace('پروژه: ', '')}</span></h3>
-                        <p class="text-slate-400 mb-4 text-sm">${projectEn.content.match(/<p>(.*?)<\/p>/)[1]}</p>
+                        <p class="text-slate-400 mb-4 text-sm"><span class="lang en">${projectEn.description}</span><span class="lang fa hidden">${projectFa.description}</span></p>
                     </div>
                     <div class="mt-4">
                         <span class="difficulty-tag difficulty-${projectDifficulty} text-xs font-semibold px-3 py-1 rounded-full mb-4 inline-block">
