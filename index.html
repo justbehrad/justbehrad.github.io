@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn C by Building</title>
+    
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter (for English) & Vazirmatn (for Persian) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons for simple, clean icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* Custom styles for a better look and feel */
+        body {
+            background-color: #0a0a0a;
+            color: #f1f5f9;
+        }
+        /* English Font */
+        body:not([dir="rtl"]) { font-family: 'Inter', sans-serif; }
+        /* Persian Font */
+        body[dir="rtl"] { font-family: 'Vazirmatn', sans-serif; }
+
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-bg {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .card-bg.clickable:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+        }
+        .btn-primary:hover {
+            filter: brightness(1.1);
+        }
+        
+        #tutorial-view > div > .max-w-4xl > pre {
+             border-radius: 0 0 0.75rem 0.75rem;
+        }
+        pre {
+            background-color: #1e1e1e !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            color: #d4d4d4;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-align: left;
+            direction: ltr;
+        }
+        
+        #tutorial-content code {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #a78bfa;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 85%;
+            border-radius: 3px;
+        }
+        #tutorial-content h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #tutorial-content ul {
+            list-style-type: disc;
+            padding-inline-start: 2rem;
+        }
+        #tutorial-content p {
+            margin-bottom: 1rem;
+            line-height: 1.75;
+        }
+    </style>
+</head>
+<body dir="ltr">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tighter">
+                C<span class="gradient-text">/Projects</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#learn-basics" class="lang en text-slate-300 hover:text-white transition-colors">Learn</a>
+                    <a href="#projects" class="lang en text-slate-300 hover:text-white transition-colors">Projects</a>
+                    <a href="#why-c" class="lang en text-slate-300 hover:text-white transition-colors">Why C?</a>
+                    <a href="#about" class="lang en text-slate-300 hover:text-white transition-colors">About</a>
+                    
+                    <a href="#learn-basics" class="lang fa hidden text-slate-300 hover:text-white transition-colors">یادگیری</a>
+                    <a href="#projects" class="lang fa hidden text-slate-300 hover:text-white transition-colors">پروژه‌ها</a>
+                    <a href="#why-c" class="lang fa hidden text-slate-300 hover:text-white transition-colors">چرا C؟</a>
+                    <a href="#about" class="lang fa hidden text-slate-300 hover:text-white transition-colors">درباره</a>
+                </nav>
+                <button id="lang-switcher" class="px-3 py-2 text-sm font-semibold text-white rounded-md bg-slate-700/50 hover:bg-slate-700 transition-colors">FA</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <div id="main-content">
+            <!-- Hero Section -->
+            <section class="text-center py-20 md:py-32">
+                <div class="container mx-auto px-6">
+                    <h1 class="lang en text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4">Learn C by <span class="gradient-text">Actually Building Things.</span></h1>
+                    <h1 class="lang fa hidden text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4">یادگیری C با <span class="gradient-text">ساختن پروژه‌های واقعی.</span></h1>
+                    
+                    <p class="lang en max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-8">Stop just reading theory. Master the C language by creating fun, simple games and applications from your very first day.</p>
+                    <p class="lang fa hidden max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-8">تئوری خوندن کافیه. با ساختن بازی‌ها و برنامه‌های ساده و سرگرم‌کننده از روز اول، به زبان C مسلط شوید.</p>
+                    
+                    <a href="#projects" class="inline-block px-8 py-4 text-lg font-bold text-white rounded-full btn-primary transition-transform hover:scale-105 shadow-lg">
+                        <span class="lang en">Browse Projects</span>
+                        <span class="lang fa hidden">مشاهده پروژه‌ها</span>
+                    </a>
+                </div>
+            </section>
+            
+            <!-- Learn the Basics Section -->
+            <section id="learn-basics" class="py-20 bg-black/20">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12">
+                        <h2 class="lang en text-3xl md:text-4xl font-bold tracking-tight">Master the Fundamentals</h2>
+                        <h2 class="lang fa hidden text-3xl md:text-4xl font-bold tracking-tight">به اصول اولیه مسلط شوید</h2>
+                        
+                        <p class="lang en text-slate-400 mt-2">Before you build, understand the core concepts of the C language.</p>
+                        <p class="lang fa hidden text-slate-400 mt-2">قبل از ساختن پروژه، مفاهیم اصلی زبان C را درک کنید.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div data-concept="variables" class="card-bg clickable rounded-xl p-6 text-center">
+                            <div class="w-12 h-12 mb-4 bg-sky-500/10 text-sky-400 rounded-lg flex items-center justify-center mx-auto"><i data-feather="type"></i></div>
+                            <h3 class="text-xl font-bold mb-2"><span class="lang en">Variables & Data Types</span><span class="lang fa hidden">متغیرها و انواع داده</span></h3>
+                            <p class="text-slate-400 text-sm"><span class="lang en">Learn how to store and manage data.</span><span class="lang fa hidden">یاد بگیرید چگونه داده‌ها را ذخیره و مدیریت کنید.</span></p>
+                        </div>
+                        <div data-concept="conditionals" class="card-bg clickable rounded-xl p-6 text-center">
+                             <div class="w-12 h-12 mb-4 bg-indigo-500/10 text-indigo-400 rounded-lg flex items-center justify-center mx-auto"><i data-feather="git-pull-request"></i></div>
+                            <h3 class="text-xl font-bold mb-2"><span class="lang en">Conditionals</span><span class="lang fa hidden">دستورات شرطی</span></h3>
+                            <p class="text-slate-400 text-sm"><span class="lang en">Control your program's flow.</span><span class="lang fa hidden">جریان برنامه خود را کنترل کنید.</span></p>
+                        </div>
+                        <div data-concept="loops" class="card-bg clickable rounded-xl p-6 text-center">
+                            <div class="w-12 h-12 mb-4 bg-amber-500/10 text-amber-400 rounded-lg flex items-center justify-center mx-auto"><i data-feather="repeat"></i></div>
+                            <h3 class="text-xl font-bold mb-2"><span class="lang en">Loops</span><span class="lang fa hidden">حلقه‌ها</span></h3>
+                            <p class="text-slate-400 text-sm"><span class="lang en">Repeat actions efficiently.</span><span class="lang fa hidden">عملیات را به صورت بهینه تکرار کنید.</span></p>
+                        </div>
+                        <div data-concept="functions" class="card-bg clickable rounded-xl p-6 text-center">
+                            <div class="w-12 h-12 mb-4 bg-green-500/10 text-green-400 rounded-lg flex items-center justify-center mx-auto"><i data-feather="box"></i></div>
+                            <h3 class="text-xl font-bold mb-2"><span class="lang en">Functions</span><span class="lang fa hidden">توابع</span></h3>
+                            <p class="text-slate-400 text-sm"><span class="lang en">Organize your code into reusable blocks.</span><span class="lang fa hidden">کد خود را در بلوک‌های قابل استفاده مجدد سازماندهی کنید.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="py-20">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12">
+                        <h2 class="lang en text-3xl md:text-4xl font-bold tracking-tight">Apply Your Knowledge</h2>
+                        <h2 class="lang fa hidden text-3xl md:text-4xl font-bold tracking-tight">دانش خود را به کار بگیرید</h2>
+
+                        <p class="lang en text-slate-400 mt-2">Pick a project, apply what you've learned, and write your first C program.</p>
+                        <p class="lang fa hidden text-slate-400 mt-2">یک پروژه انتخاب کنید، آموخته‌های خود را به کار ببرید و اولین برنامه C خود را بنویسید.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="card-bg rounded-xl p-8 flex flex-col">
+                            <div class="flex-grow">
+                                <div class="w-12 h-12 mb-4 bg-sky-500/10 text-sky-400 rounded-lg flex items-center justify-center"><i data-feather="hash"></i></div>
+                                <h3 class="text-xl font-bold mb-2"><span class="lang en">Guess the Number</span><span class="lang fa hidden">حدس عدد</span></h3>
+                                <p class="text-slate-400 mb-4"><span class="lang en">A classic beginner project. Learn about variables, loops, and conditional logic.</span><span class="lang fa hidden">یک پروژه کلاسیک برای مبتدیان. با متغیرها، حلقه‌ها و منطق شرطی آشنا شوید.</span></p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="inline-block bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-1 rounded-full mb-4"><span class="lang en">Beginner</span><span class="lang fa hidden">مبتدی</span></span>
+                                <button data-project="guess-the-number" class="tutorial-btn w-full text-center font-semibold py-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors"><span class="lang en">Start Tutorial</span><span class="lang fa hidden">شروع آموزش</span></button>
+                            </div>
+                        </div>
+                        <div class="card-bg rounded-xl p-8 flex flex-col">
+                             <div class="flex-grow">
+                                <div class="w-12 h-12 mb-4 bg-indigo-500/10 text-indigo-400 rounded-lg flex items-center justify-center"><i data-feather="grid"></i></div>
+                                <h3 class="text-xl font-bold mb-2"><span class="lang en">Tic-Tac-Toe</span><span class="lang fa hidden">دوز (XO)</span></h3>
+                                <p class="text-slate-400 mb-4"><span class="lang en">Create a two-player Tic-Tac-Toe game. Learn about arrays and functions.</span><span class="lang fa hidden">یک بازی دوز دو نفره بسازید. با آرایه‌ها و توابع آشنا شوید.</span></p>
+                            </div>
+                            <div class="mt-4">
+                                 <span class="inline-block bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-1 rounded-full mb-4"><span class="lang en">Beginner</span><span class="lang fa hidden">مبتدی</span></span>
+                                 <button data-project="tic-tac-toe" class="tutorial-btn w-full text-center font-semibold py-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors"><span class="lang en">Start Tutorial</span><span class="lang fa hidden">شروع آموزش</span></button>
+                            </div>
+                        </div>
+                        <div class="card-bg rounded-xl p-8 flex flex-col">
+                             <div class="flex-grow">
+                                <div class="w-12 h-12 mb-4 bg-amber-500/10 text-amber-400 rounded-lg flex items-center justify-center"><i data-feather="map"></i></div>
+                                <h3 class="text-xl font-bold mb-2"><span class="lang en">Simple Text Adventure</span><span class="lang fa hidden">ماجراجویی متنی ساده</span></h3>
+                                <p class="text-slate-400 mb-4"><span class="lang en">Build a "choose your own adventure" game. A great way to practice strings and program flow.</span><span class="lang fa hidden">یک بازی "ماجراجویی خودت را انتخاب کن" بسازید. راهی عالی برای تمرین رشته‌ها و جریان برنامه.</span></p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="inline-block bg-yellow-500/10 text-yellow-400 text-xs font-semibold px-3 py-1 rounded-full mb-4"><span class="lang en">Intermediate</span><span class="lang fa hidden">متوسط</span></span>
+                                <button data-project="text-adventure" class="tutorial-btn w-full text-center font-semibold py-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors"><span class="lang en">Start Tutorial</span><span class="lang fa hidden">شروع آموزش</span></button>
+                            </div>
+                        </div>
+                        <!-- NEW PROJECT 1 -->
+                        <div class="card-bg rounded-xl p-8 flex flex-col">
+                            <div class="flex-grow">
+                                <div class="w-12 h-12 mb-4 bg-rose-500/10 text-rose-400 rounded-lg flex items-center justify-center"><i data-feather="cpu"></i></div>
+                                <h3 class="text-xl font-bold mb-2"><span class="lang en">Simple Calculator</span><span class="lang fa hidden">ماشین حساب ساده</span></h3>
+                                <p class="text-slate-400 mb-4"><span class="lang en">Perform basic arithmetic operations using a switch statement.</span><span class="lang fa hidden">عملیات اصلی ریاضی را با استفاده از دستور سوییچ انجام دهید.</span></p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="inline-block bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-1 rounded-full mb-4"><span class="lang en">Beginner</span><span class="lang fa hidden">مبتدی</span></span>
+                                <button data-project="simple-calculator" class="tutorial-btn w-full text-center font-semibold py-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors"><span class="lang en">Start Tutorial</span><span class="lang fa hidden">شروع آموزش</span></button>
+                            </div>
+                        </div>
+                        <!-- NEW PROJECT 2 -->
+                        <div class="card-bg rounded-xl p-8 flex flex-col">
+                             <div class="flex-grow">
+                                <div class="w-12 h-12 mb-4 bg-cyan-500/10 text-cyan-400 rounded-lg flex items-center justify-center"><i data-feather="scissors"></i></div>
+                                <h3 class="text-xl font-bold mb-2"><span class="lang en">Rock, Paper, Scissors</span><span class="lang fa hidden">سنگ، کاغذ، قیچی</span></h3>
+                                <p class="text-slate-400 mb-4"><span class="lang en">Code the classic game against the computer. Practice random numbers.</span><span class="lang fa hidden">بازی کلاسیک را در برابر کامپیوتر کدنویسی کنید. اعداد تصادفی را تمرین کنید.</span></p>
+                            </div>
+                            <div class="mt-4">
+                                 <span class="inline-block bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-1 rounded-full mb-4"><span class="lang en">Beginner</span><span class="lang fa hidden">مبتدی</span></span>
+                                 <button data-project="rock-paper-scissors" class="tutorial-btn w-full text-center font-semibold py-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors"><span class="lang en">Start Tutorial</span><span class="lang fa hidden">شروع آموزش</span></button>
+                            </div>
+                        </div>
+                        <!-- NEW PROJECT 3 -->
+                        <div class="card-bg rounded-xl p-8 flex flex-col">
+                             <div class="flex-grow">
+                                <div class="w-12 h-12 mb-4 bg-lime-500/10 text-lime-400 rounded-lg flex items-center justify-center"><i data-feather="book-open"></i></div>
+                                <h3 class="text-xl font-bold mb-2"><span class="lang en">Contact Book</span><span class="lang fa hidden">دفترچه تلفن</span></h3>
+                                <p class="text-slate-400 mb-4"><span class="lang en">Manage contacts using structs and save them to a file. Learn about file I/O.</span><span class="lang fa hidden">مخاطبین را با struct مدیریت کرده و در فایل ذخیره کنید. با ورودی/خروجی فایل آشنا شوید.</span></p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="inline-block bg-yellow-500/10 text-yellow-400 text-xs font-semibold px-3 py-1 rounded-full mb-4"><span class="lang en">Intermediate</span><span class="lang fa hidden">متوسط</span></span>
+                                <button data-project="contact-book" class="tutorial-btn w-full text-center font-semibold py-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors"><span class="lang en">Start Tutorial</span><span class="lang fa hidden">شروع آموزش</span></button>
+                            </div>
+                        </div>
+                        <!-- NEW PROJECT 4 -->
+                        <div class="card-bg rounded-xl p-8 flex flex-col">
+                             <div class="flex-grow">
+                                <div class="w-12 h-12 mb-4 bg-fuchsia-500/10 text-fuchsia-400 rounded-lg flex items-center justify-center"><i data-feather="user-x"></i></div>
+                                <h3 class="text-xl font-bold mb-2"><span class="lang en">Hangman Game</span><span class="lang fa hidden">بازی هنگمن</span></h3>
+                                <p class="text-slate-400 mb-4"><span class="lang en">Build the classic word-guessing game. Involves arrays, strings, and loops.</span><span class="lang fa hidden">بازی کلاسیک حدس کلمه را بسازید. شامل آرایه‌ها، رشته‌ها و حلقه‌ها می‌شود.</span></p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="inline-block bg-red-500/10 text-red-400 text-xs font-semibold px-3 py-1 rounded-full mb-4"><span class="lang en">Advanced</span><span class="lang fa hidden">پیشرفته</span></span>
+                                <button data-project="hangman" class="tutorial-btn w-full text-center font-semibold py-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors"><span class="lang en">Start Tutorial</span><span class="lang fa hidden">شروع آموزش</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Why C Section -->
+            <section id="why-c" class="py-20">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12">
+                        <h2 class="lang en text-3xl md:text-4xl font-bold tracking-tight">C is Powerful & Foundational</h2>
+                        <h2 class="lang fa hidden text-3xl md:text-4xl font-bold tracking-tight">C، قدرتمند و بنیادی</h2>
+                        <p class="lang en text-slate-400 mt-2">It's the language that powers the world. Here's a taste of what it looks like.</p>
+                        <p class="lang fa hidden text-slate-400 mt-2">این زبانی است که دنیا را به حرکت در می‌آورد. در اینجا نمونه‌ای از آن را می‌بینید.</p>
+                    </div>
+                    <div class="max-w-3xl mx-auto bg-gray-900 rounded-xl shadow-2xl overflow-hidden border border-slate-700">
+                        <div class="bg-slate-800 px-4 py-2 flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            </div>
+                            <span class="text-sm text-slate-400">hello_world.c</span>
+                            <button id="copy-btn" class="flex items-center space-x-2 text-sm text-slate-400 hover:text-white transition-colors">
+                                <i data-feather="copy" class="w-4 h-4 copy-icon"></i>
+                                <span id="copy-text" class="lang en">Copy</span>
+                                <span id="copy-text-fa" class="lang fa hidden">کپی</span>
+                            </button>
+                        </div>
+                        <pre><code id="code-block" class="language-c">// Your first C program!
+#include &lt;stdio.h&gt;
+
+int main() {
+    // printf is used to print output to the console
+    printf("Hello, World!\\n");
+    
+    return 0; // Signal that the program ran successfully
+}
+</code></pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tutorial/Article View Section (hidden by default) -->
+        <section id="tutorial-view" class="hidden py-20">
+            <div class="container mx-auto px-6">
+                <button id="back-to-main" class="inline-flex items-center space-x-2 text-slate-300 hover:text-white transition-colors mb-8">
+                    <i data-feather="arrow-left"></i>
+                    <span class="lang en">Back to Main Page</span>
+                    <span class="lang fa hidden">بازگشت به صفحه اصلی</span>
+                </button>
+                <div id="tutorial-content-wrapper">
+                    <h2 id="tutorial-title" class="text-3xl md:text-4xl font-bold tracking-tight mb-4"></h2>
+                    <div id="tutorial-content" class="prose prose-invert prose-lg max-w-4xl text-slate-300"></div>
+                </div>
+                <div id="final-code-wrapper" class="max-w-4xl mx-auto mt-8 bg-gray-900 rounded-xl shadow-2xl overflow-hidden border border-slate-700">
+                    <div class="bg-slate-800 px-4 py-2 flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <span id="tutorial-filename" class="text-sm text-slate-400"></span>
+                        <button id="tutorial-copy-btn" class="flex items-center space-x-2 text-sm text-slate-400 hover:text-white transition-colors">
+                            <i data-feather="copy" class="w-4 h-4 copy-icon"></i>
+                            <span id="tutorial-copy-text" class="lang en">Copy</span>
+                            <span id="tutorial-copy-text-fa" class="lang fa hidden">کپی</span>
+                        </button>
+                    </div>
+                    <pre><code id="tutorial-code-block" class="language-c"></code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer id="about" class="border-t border-slate-800 mt-20">
+        <div class="container mx-auto px-6 py-12 text-center text-slate-400">
+            <h3 class="text-2xl font-bold text-white mb-4"><span class="lang en">About the Creator</span><span class="lang fa hidden">درباره سازنده</span></h3>
+            <p class="max-w-2xl mx-auto mb-4 lang en">This site was built by <strong>Behrad Ghasemi</strong>, a 20-year-old programmer and passionate educator. As a CS50 teacher, Behrad believes that the best way to learn programming is by getting your hands dirty and building real, tangible projects. C can seem intimidating, but his goal is to break it down and make it accessible to everyone, one project at a time.</p>
+            <p class="max-w-2xl mx-auto mb-4 lang fa hidden">این سایت توسط <strong>بهراد قاسمی</strong>، یک برنامه‌نویس ۲۰ ساله و مدرس مشتاق ساخته شده است. به عنوان یک مدرس CS50، بهراد معتقد است که بهترین راه برای یادگیری برنامه‌نویسی، دست به کار شدن و ساختن پروژه‌های واقعی و ملموس است. زبان C ممکن است ترسناک به نظر برسد، اما هدف او این است که آن را ساده‌سازی کرده و برای همه، پروژه به پروژه، قابل دسترس کند.</p>
+            <p class="text-sm">&copy; 2024 C/Projects. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            // --- DATA STORE ---
+            const contentData = {
+                en: {
+                    'variables': {
+                        title: 'Variables & Data Types',
+                        filename: 'variables_example.c',
+                        content: `<p>In programming, a <strong>variable</strong> is a named location in memory that stores a value. Before you can use a variable in C, you must declare it, which means specifying its type and name.</p><h4>What are Data Types?</h4><p>A data type tells the compiler what kind of data a variable can hold, which determines the memory size allocated for it and the operations that can be performed on it.</p><ul><li><code>int</code>: Used for integers (whole numbers without a decimal point). Examples: <code>10</code>, <code>-50</code>, <code>0</code>.</li><li><code>float</code>: Used for single-precision floating-point numbers (numbers with a decimal point). Examples: <code>3.14</code>, <code>-0.005</code>.</li><li><code>double</code>: Used for double-precision floating-point numbers. It offers more precision than <code>float</code> and is generally recommended for decimal numbers.</li><li><code>char</code>: Used for a single character. The value is enclosed in single quotes. Examples: <code>'A'</code>, <code>'b'</code>, <code>'!'</code>.</li></ul><h4>Declaring and Initializing Variables</h4><p>Declaration sets the type and name. Initialization gives it an initial value. You can do both at the same time.</p><pre><code>// Declaration only\nint myNumber;\n\n// Initialization\nmyNumber = 100;\n\n// Declaration and Initialization\nchar myInitial = 'B';</code></pre><h4>Constants</h4><p>If you have a variable that should never change, you can use the <code>const</code> keyword to make it a constant. Trying to change a constant will result in a compiler error.</p><pre><code>const float PI = 3.14159;</code></pre><p>The example below demonstrates how to declare, initialize, and print different types of variables.</p>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    int age = 25;
+    double grade = 95.5;
+    char initial = 'B';
+    const float PI = 3.14159;
+    printf("My age is %d.\\n", age);
+    printf("My exam grade was %lf.\\n", grade);
+    printf("My initial is %c.\\n", initial);
+    printf("The value of PI is approximately %f.\\n", PI);
+    return 0;
+}`.trim()
+                    },
+                    'conditionals': {
+                        title: 'Conditionals (if/else/switch)',
+                        filename: 'conditionals_example.c',
+                        content: `<p><strong>Conditionals</strong> are the decision-making structures in programming. They allow you to execute different blocks of code based on whether a certain condition is true or false.</p><h4>The <code>if-else if-else</code> Chain</h4><p>This is the most common conditional structure.<ul><li><code>if</code>: Executes code if its condition is true.</li><li><code>else if</code>: If the first <code>if</code> is false, this checks a new condition. You can have multiple <code>else if</code> blocks.</li><li><code>else</code>: If all preceding <code>if</code> and <code>else if</code> conditions are false, this block is executed.</li></ul><h4>Logical Operators</h4><p>You can combine conditions using logical operators:</p><ul><li><code>&&</code> (AND): True only if <strong>both</strong> conditions are true.</li><li><code>||</code> (OR): True if <strong>at least one</strong> condition is true.</li><li><code>!</code> (NOT): Inverts the truth value of a condition (true becomes false, false becomes true).</li></ul><h4>The <code>switch</code> Statement</h4><p>A <code>switch</code> statement is a good alternative to a long <code>if-else if</code> chain when you are checking a single variable against a list of possible constant values.</p>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    int score = 85;
+    char grade;
+
+    if (score >= 90) {
+        grade = 'A';
+    } else if (score >= 80) {
+        grade = 'B';
+    } else if (score >= 70) {
+        grade = 'C';
+    } else {
+        grade = 'F';
+    }
+    printf("Your grade is %c.\\n\\n", grade);
+
+    printf("Based on your grade, here is your feedback:\\n");
+    switch (grade) {
+        case 'A':
+            printf("Excellent work!\\n");
+            break;
+        case 'B':
+            printf("Good job!\\n");
+            break;
+        case 'C':
+            printf("You passed.\\n");
+            break;
+        default:
+            printf("Please see the instructor.\\n");
+            break;
+    }
+
+    return 0;
+}`.trim()
+                    },
+                    'loops': {
+                        title: 'Loops (for, while, do-while)',
+                        filename: 'loops_example.c',
+                        content: `<p><strong>Loops</strong> allow you to repeat a block of code multiple times, which is fundamental to programming. C provides three main types of loops.</p><h4>The <code>for</code> Loop</h4><p>A <code>for</code> loop is ideal when you know in advance how many times you need to iterate. It consists of three parts, separated by semicolons:</p><ol><li><strong>Initialization:</strong> Runs once at the very beginning. (e.g., <code>int i = 0</code>)</li><li><strong>Condition:</strong> Checked before each iteration. If it's true, the loop continues. (e.g., <code>i < 5</code>)</li><li><strong>Increment/Decrement:</strong> Runs at the end of each iteration. (e.g., <code>i++</code>)</li></ol><h4>The <code>while</code> Loop</h4><p>A <code>while</code> loop repeats as long as its condition is true. The condition is checked <strong>before</strong> the loop body is executed. If the condition is false initially, the loop will never run.</p><h4>The <code>do-while</code> Loop</h4><p>This is similar to a <code>while</code> loop, but the condition is checked <strong>after</strong> the loop body is executed. This guarantees that the loop will run at least once.</p><h4><code>break</code> and <code>continue</code></h4><p>You can control loops further with two keywords:</p><ul><li><code>break</code>: Immediately exits the current loop.</li><li><code>continue</code>: Skips the rest of the current iteration and jumps to the next one.</li></ul>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    printf("--- For Loop ---\\n");
+    for (int i = 1; i <= 5; i++) {
+        if (i == 4) {
+            continue;
+        }
+        printf("i is now %d\\n", i);
+    }
+
+    printf("\\n--- While Loop ---\\n");
+    int countdown = 3;
+    while (countdown > 0) {
+        printf("%d...\\n", countdown);
+        countdown--;
+    }
+    printf("Blast off!\\n");
+
+    printf("\\n--- Do-While Loop ---\\n");
+    int input;
+    do {
+        printf("Enter 0 to exit: ");
+        scanf("%d", &input);
+        printf("You entered: %d\\n", input);
+    } while (input != 0);
+    printf("Exited the do-while loop.\\n");
+
+    return 0;
+}`.trim()
+                    },
+                    'functions': {
+                        title: 'Functions',
+                        filename: 'functions_example.c',
+                        content: `<p>A <strong>function</strong> is a self-contained block of code that performs a specific task. Using functions is a core principle of good programming, as it allows you to make your code more modular, reusable, and easier to read.</p><h4>Anatomy of a Function</h4><ul><li><strong>Return Type:</strong> The data type of the value the function returns. If it doesn't return anything, the type is <code>void</code>.</li><li><strong>Function Name:</strong> A unique name to identify the function.</li><li><strong>Parameters (optional):</strong> Variables listed in the function declaration that accept input values when the function is called.</li><li><strong>Function Body:</strong> The block of code enclosed in <code>{}</code> that performs the task.</li></ul><h4>Declaration (Prototype) vs. Definition</h4><p>A function <strong>declaration</strong>, or <strong>prototype</strong>, tells the compiler about a function's name, return type, and parameters. It's usually placed at the top of the file so that other functions can call it. The <strong>definition</strong> is the actual code inside the function.</p><p>In our example, <code>int add(int a, int b);</code> is the prototype. The full block of code for <code>add</code> later on is the definition.</p><h4>Parameters vs. Arguments</h4><p><strong>Parameters</strong> are the variables in the function's declaration (e.g., <code>int a, int b</code>). <strong>Arguments</strong> are the actual values passed to the function when it is called (e.g., the <code>5</code> and <code>3</code> in <code>add(5, 3)</code>).</p>`,
+                        code: `
+#include <stdio.h>
+
+int add(int a, int b);
+void printGreeting(char name[]);
+
+int main() {
+    int sum = add(5, 3); 
+    printf("The sum is %d.\\n", sum);
+    printGreeting("Behrad"); 
+    return 0;
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+
+void printGreeting(char name[]) {
+    printf("Hello, %s! Welcome to the program.\\n", name);
+}`.trim()
+                    },
+                    'guess-the-number': {
+                        title: 'Project: Guess the Number',
+                        filename: 'guess_game.c',
+                        content: `<p>This project is a perfect introduction to programming concepts. We'll create a game where the computer thinks of a number, and the player has to guess it. The program will give hints of "Too high" or "Too low".</p><h4>Step 1: Includes and Setup</h4><p>First, we need to include the necessary libraries. <code>stdio.h</code> is for standard input/output (like <code>printf</code> and <code>scanf</code>). <code>stdlib.h</code> is for generating random numbers (<code>rand</code> and <code>srand</code>). <code>time.h</code> is used to get the current time to seed our random number generator, making it different each time we run the program.</p><pre><code>#include &lt;stdio.h&gt;\n#include &lt;stdlib.h&gt;\n#include &lt;time.h&gt;</code></pre><h4>Step 2: Generating a Random Number</h4><p>Inside <code>main</code>, we first need to "seed" the random number generator. Using <code>srand(time(0))</code> ensures that our sequence of random numbers is different every time the game is played. Then, we use <code>rand() % 100 + 1</code> to get a random number between 1 and 100.</p><pre><code>srand(time(0)); \nint randomNumber = (rand() % 100) + 1;\nint userGuess = 0;</code></pre><h4>Step 3: The Game Loop</h4><p>We need a loop that continues as long as the user's guess is not correct. A <code>while</code> loop is perfect for this. Inside the loop, we prompt the user, get their input using <code>scanf</code>, and then use an <code>if-else if-else</code> chain to compare their guess to the secret number and provide feedback.</p><pre><code>while (userGuess != randomNumber) {\n    printf("Enter your guess: ");\n    scanf("%d", &userGuess);\n\n    if (userGuess > randomNumber) {\n        printf("Too high! Try again.\\n");\n    } else if (userGuess < randomNumber) {\n        printf("Too low! Try again.\\n");\n    } else {\n        printf("Congratulations! You guessed it!\\n");\n    }\n}</code></pre><p>Below is the complete, final code for the game.</p>`,
+                        code: `
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    srand(time(0)); 
+    int randomNumber = (rand() % 100) + 1; 
+    int userGuess = 0;
+    printf("I have selected a number between 1 and 100.\\n");
+    printf("Can you guess what it is?\\n");
+    while (userGuess != randomNumber) {
+        printf("Enter your guess: ");
+        scanf("%d", &userGuess);
+        if (userGuess > randomNumber) {
+            printf("Too high! Try again.\\n");
+        } else if (userGuess < randomNumber) {
+            printf("Too low! Try again.\\n");
+        } else {
+            printf("Congratulations! You guessed it!\\n");
+        }
+    }
+    return 0;
+}`.trim()
+                    },
+                    'tic-tac-toe': {
+                        title: 'Project: Console Tic-Tac-Toe',
+                        filename: 'tictactoe.c',
+                        content: `<p>This project builds a two-player Tic-Tac-Toe game that runs in the console. It's a great way to learn about 2D arrays and breaking your program into functions.</p><h4>Step 1: Setup and The Game Board</h4><p>We'll represent the game board using a 2D char array. A 3x3 array is perfect. We initialize it with numbers '1' through '9' to show the players which positions they can choose.</p><pre><code>#include &lt;stdio.h&gt;\n\nchar board[3][3] = {\n    {'1', '2', '3'},\n    {'4', '5', '6'},\n    {'7', '8', '9'}\n};</code></pre><h4>Step 2: The <code>printBoard</code> Function</h4><p>A function to print the board makes our code much cleaner. This function takes the 2D array as a parameter and prints it in a user-friendly format.</p><pre><code>void printBoard(char board[3][3]) {\n    printf("\\n  %c | %c | %c \\n", board[0][0], board[0][1], board[0][2]);\n    printf(" ---|---|---\\n");\n    printf("  %c | %c | %c \\n", board[1][0], board[1][1], board[1][2]);\n    printf(" ---|---|---\\n");\n    printf("  %c | %c | %c \\n\\n", board[2][0], board[2][1], board[2][2]);\n}</code></pre><h4>Step 3: The Game Loop and Player Input</h4><p>In <code>main</code>, we'll use a <code>do-while</code> loop to keep the game running. Inside, we determine whose turn it is (Player 1 or 2), get their choice with <code>scanf</code>, and calculate the corresponding row and column for the array. We also add checks to make sure the move is valid.</p><h4>Step 4: Checking for a Winner</h4><p>This is the most complex part. We need a function, <code>checkWin</code>, that checks all possible winning conditions: all three rows, all three columns, and both diagonals. It should return 1 for a win, 0 for a draw, and -1 if the game is still ongoing.</p><p>Below is the complete, final code for the game.</p>`,
+                        code: `
+#include <stdio.h>
+
+void printBoard(char board[3][3]);
+int checkWin(char board[3][3]);
+
+int main() {
+    char board[3][3] = {{'1','2','3'},{'4','5','6'},{'7','8','9'}};
+    int player = 1, choice, i = -1, row, col;
+    char mark;
+    do {
+        printBoard(board);
+        player = (player % 2) ? 1 : 2;
+        mark = (player == 1) ? 'X' : 'O';
+        printf("Player %d, enter a number: ", player);
+        scanf("%d", &choice);
+        row = (choice - 1) / 3;
+        col = (choice - 1) % 3;
+        if (choice < 1 || choice > 9 || board[row][col] == 'X' || board[row][col] == 'O') {
+            printf("Invalid move. Try again.\\n");
+            player--;
+        } else {
+            board[row][col] = mark;
+            i = checkWin(board);
+        }
+    } while (i == -1);
+    printBoard(board);
+    if (i == 1) printf("==> Player %d wins!\\n", player);
+    else printf("==> Game is a draw!\\n");
+    return 0;
+}
+
+void printBoard(char board[3][3]) {
+    printf("\\nTic Tac Toe\\nPlayer 1 (X)  -  Player 2 (O)\\n\\n");
+    printf("     |     |     \\n  %c  |  %c  |  %c \\n_____|_____|_____\\n     |     |     \\n  %c  |  %c  |  %c \\n_____|_____|_____\\n     |     |     \\n  %c  |  %c  |  %c \\n     |     |     \\n\\n", board[0][0], board[0][1], board[0][2], board[1][0], board[1][1], board[1][2], board[2][0], board[2][1], board[2][2]);
+}
+
+int checkWin(char board[3][3]) {
+    for (int i = 0; i < 3; i++)
+        if ((board[i][0] == board[i][1] && board[i][1] == board[i][2]) || (board[0][i] == board[1][i] && board[1][i] == board[2][i])) return 1;
+    if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) || (board[0][2] == board[1][1] && board[1][0] == board[2][0])) return 1;
+    for(int i = 0; i < 3; i++)
+        for(int j = 0; j < 3; j++)
+            if(board[i][j] != 'X' && board[i][j] != 'O') return -1;
+    return 0;
+}`.trim()
+                    },
+                    'text-adventure': {
+                        title: 'Project: Simple Text Adventure',
+                        filename: 'adventure.c',
+                        content: `<p>This project builds a very basic "choose your own adventure" game. It's an excellent way to practice nested <code>if-else</code> statements to create branching paths in your story.</p><h4>Step 1: The First Choice</h4><p>The game starts by presenting the player with a scenario and two choices. We store their decision in an integer variable called <code>choice1</code> using <code>scanf</code>.</p><h4>Step 2: Branching with <code>if-else</code></h4><p>We use a large <code>if-else if-else</code> structure to handle the player's first choice. If they choose 1, the game ends with a safe outcome. If they choose 2, we move to the next step. An <code>else</code> at the end handles any invalid input.</p><h4>Step 3: Nested Conditionals for the Second Choice</h4><p>Inside the <code>else if (choice1 == 2)</code> block, we create another, nested story branch. We present a new scenario and get a new input, <code>choice2</code>. Another <code>if-else</code> block inside the first one determines the final outcome of this path.</p><p>This nesting of conditional statements is what creates the branching narrative. Below is the complete code.</p>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    int choice1, choice2;
+    printf("You wake up in a dark forest. There are two paths.\\n");
+    printf("1. Go left towards a faint light.\\n");
+    printf("2. Go right towards a strange noise.\\n");
+    printf("Enter your choice (1 or 2): ");
+    scanf("%d", &choice1);
+
+    if (choice1 == 1) {
+        printf("\\nYou follow the light and find a small, cozy cabin.\\n");
+        printf("Inside, a warm fire is burning. You are safe.\\n");
+        printf("THE END.\\n");
+    } else if (choice1 == 2) {
+        printf("\\nYou walk towards the noise and find a sleeping dragon!\\n");
+        printf("What do you do?\\n");
+        printf("1. Try to sneak past it.\\n");
+        printf("2. Poke it with a stick.\\n");
+        printf("Enter your choice (1 or 2): ");
+        scanf("%d", &choice2);
+        if (choice2 == 1) {
+            printf("\\nYou successfully sneak past the dragon and find a treasure chest!\\n");
+            printf("You win!\\n");
+        } else if (choice2 == 2) {
+            printf("\\nThe dragon wakes up and is very angry. It eats you.\\n");
+            printf("GAME OVER.\\n");
+        } else {
+            printf("\\nInvalid choice. The dragon wakes up anyway and eats you.\\n");
+        }
+    } else {
+        printf("\\nYou stand still, and a wolf finds you. GAME OVER.\\n");
+    }
+    return 0;
+}`.trim()
+                    },
+                    'simple-calculator': {
+                        title: 'Project: Simple Calculator',
+                        filename: 'calculator.c',
+                        content: `<p>This project creates a basic command-line calculator. It's a great way to practice getting different types of user input (numbers and characters) and using a <code>switch</code> statement to handle different cases.</p><h4>Step 1: Getting User Input</h4><p>We need to ask the user for three things: two numbers and an operator. We'll use <code>double</code> for the numbers to allow for decimal points, and a <code>char</code> for the operator (+, -, *, /).</p><pre><code>char operator;\ndouble n1, n2;\n\nprintf("Enter an operator (+, -, *, /): ");\nscanf("%c", &operator);\n\nprintf("Enter two operands: ");\nscanf("%lf %lf", &n1, &n2);</code></pre><h4>Step 2: The <code>switch</code> Statement</h4><p>A <code>switch</code> statement is perfect for this task. We check the value of the <code>operator</code> variable and provide a case for each valid operator. The <code>default</code> case handles any invalid operator the user might enter.</p><h4>Step 3: Handling Division by Zero</h4><p>Inside the case for division, it's important to check if the second number (the divisor) is zero. Dividing by zero is an undefined operation in mathematics and will cause an error in your program. We add an <code>if</code> statement to handle this specific scenario gracefully.</p>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    char op;
+    double first, second;
+    printf("Enter an operator (+, -, *, /): ");
+    scanf("%c", &op);
+    printf("Enter two operands: ");
+    scanf("%lf %lf", &first, &second);
+
+    switch (op) {
+    case '+':
+        printf("%.1lf + %.1lf = %.1lf\\n", first, second, first + second);
+        break;
+    case '-':
+        printf("%.1lf - %.1lf = %.1lf\\n", first, second, first - second);
+        break;
+    case '*':
+        printf("%.1lf * %.1lf = %.1lf\\n", first, second, first * second);
+        break;
+    case '/':
+        if (second != 0.0)
+            printf("%.1lf / %.1lf = %.1lf\\n", first, second, first / second);
+        else
+            printf("Error! Division by zero.\\n");
+        break;
+    default:
+        printf("Error! Operator is not correct\\n");
+    }
+
+    return 0;
+}`.trim()
+                    },
+                    'rock-paper-scissors': {
+                        title: 'Project: Rock, Paper, Scissors',
+                        filename: 'rps.c',
+                        content: `<p>Let's build the classic game of Rock, Paper, Scissors against the computer. This project will reinforce your understanding of random number generation and complex conditional logic with <code>if-else</code> statements.</p><h4>Step 1: Computer's Choice</h4><p>We'll use <code>rand()</code> to generate a number from 0 to 2, where 0 represents Rock, 1 represents Paper, and 2 represents Scissors. Remember to seed the random number generator with <code>srand(time(0))</code> to get different results each time.</p><h4>Step 2: Player's Choice</h4><p>We'll prompt the player to enter their choice. We can take this as an integer or a character. An integer is often simpler to compare.</p><h4>Step 3: Determining the Winner</h4><p>This is the core logic. We first check for a draw. If it's not a draw, we use a series of <code>else if</code> statements to check all the winning conditions for the player (e.g., player chose Rock and computer chose Scissors). If none of those are true, the player must have lost.</p>`,
+                        code: `
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int player_choice, comp_choice;
+
+    srand(time(0));
+    comp_choice = rand() % 3;
+
+    printf("Enter your choice (0 for Rock, 1 for Paper, 2 for Scissors): ");
+    scanf("%d", &player_choice);
+
+    printf("You chose: %d\\n", player_choice);
+    printf("Computer chose: %d\\n", comp_choice);
+
+    if (player_choice == comp_choice) {
+        printf("It's a draw!\\n");
+    } else if ((player_choice == 0 && comp_choice == 2) ||
+               (player_choice == 1 && comp_choice == 0) ||
+               (player_choice == 2 && comp_choice == 1)) {
+        printf("You win!\\n");
+    } else {
+        printf("Computer wins!\\n");
+    }
+
+    return 0;
+}`.trim()
+                    },
+                    'contact-book': {
+                        title: 'Project: Simple Contact Book',
+                        filename: 'contacts.c',
+                        content: `<p>This intermediate project introduces two very important concepts: <code>structs</code> for organizing data and file I/O for making that data persistent (saving it).</p><h4>Step 1: The Contact <code>struct</code></h4><p>A <code>struct</code> (or structure) is a collection of variables under a single name. It's perfect for grouping related data. We will define a struct to hold a contact's name and phone number.</p><pre><code>struct Contact {\n    char name[50];\n    char phone[15];\n};</code></pre><h4>Step 2: Adding a Contact</h4><p>We'll create a function that takes a pointer to a <code>Contact</code> struct. It will prompt the user to enter a name and phone number, which are stored in the struct's members.</p><h4>Step 3: Saving to a File</h4><p>This is the key to making our program useful. We use <code>fopen("contacts.txt", "a")</code> to open a file named "contacts.txt" in <strong>append mode</strong>. Append mode means we add to the end of the file without erasing existing content. We then use <code>fprintf</code> (file printf) to write the contact details to the file, and finally, we close it with <code>fclose</code>. It's crucial to close the file to ensure data is saved correctly.</p><p>This example focuses on adding and saving. A more advanced version would also load contacts from the file when the program starts.</p>`,
+                        code: `
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Contact {
+    char name[50];
+    char phone[15];
+};
+
+int main() {
+    struct Contact newContact;
+    FILE *fp;
+
+    // Open file in append mode
+    fp = fopen("contacts.txt", "a");
+    if (fp == NULL) {
+        printf("Error opening file!\\n");
+        return 1;
+    }
+
+    printf("Enter name: ");
+    scanf("%s", newContact.name);
+
+    printf("Enter phone number: ");
+    scanf("%s", newContact.phone);
+
+    // Write the contact to the file
+    fprintf(fp, "Name: %s, Phone: %s\\n", newContact.name, newContact.phone);
+
+    // Close the file
+    fclose(fp);
+
+    printf("Contact saved successfully!\\n");
+
+    return 0;
+}`.trim()
+                    },
+                    'hangman': {
+                        title: 'Project: Hangman Game',
+                        filename: 'hangman.c',
+                        content: `<p>This is a more advanced project that combines arrays, strings, loops, and complex logic to create the classic word-guessing game, Hangman.</p><h4>Step 1: Game Setup</h4><p>We need several variables: the secret word, an array to show the player's progress (initially filled with underscores), the number of wrong guesses allowed, and an array to keep track of letters already guessed.</p><h4>Step 2: The Main Game Loop</h4><p>The game continues as long as the player has guesses left AND they haven't guessed the full word yet. A <code>while</code> loop is perfect for this.</p><h4>Step 3: Displaying Progress</h4><p>Inside the loop, we first print the current state of the word (e.g., <code>_ P P _ _</code>) and the number of wrong guesses remaining.</p><h4>Step 4: Handling a Guess</h4><p>We get a character guess from the player. We then loop through the secret word. If the guessed letter is found, we update our display array at the correct positions. We also set a flag to know the guess was correct. If the flag is still false after checking the whole word, the guess was wrong, and we decrement the remaining lives.</p><h4>Step 5: Win/Loss Condition</h4><p>After the loop ends, we check why it ended. If the player has no more lives, they lose. Otherwise, they must have guessed the word, and they win!</p>`,
+                        code: `
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main() {
+    char secretWord[] = "apple";
+    int wordLength = strlen(secretWord);
+    char guessedLetters[26] = {0};
+    int wrongGuesses = 0;
+    const int MAX_WRONG_GUESSES = 6;
+    int lettersFound = 0;
+
+    printf("Welcome to Hangman!\\n");
+
+    while (wrongGuesses < MAX_WRONG_GUESSES && lettersFound < wordLength) {
+        // Print the word with underscores
+        for (int i = 0; i < wordLength; i++) {
+            int found = 0;
+            for (int j = 0; j < 26; j++) {
+                if (guessedLetters[j] == secretWord[i]) {
+                    printf("%c ", secretWord[i]);
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found) {
+                printf("_ ");
+            }
+        }
+        printf("\\n");
+
+        char guess;
+        printf("Guesses left: %d\\nEnter a letter: ", MAX_WRONG_GUESSES - wrongGuesses);
+        scanf(" %c", &guess);
+
+        // Check if letter was already guessed
+        int alreadyGuessed = 0;
+        for(int i = 0; i < 26; i++) {
+            if(guessedLetters[i] == guess) {
+                printf("You already guessed that letter.\\n");
+                alreadyGuessed = 1;
+                break;
+            }
+        }
+        if(alreadyGuessed) continue;
+
+        // Add guess to list of guessed letters
+        for(int i=0; i<26; i++){
+            if(guessedLetters[i] == 0){
+                guessedLetters[i] = guess;
+                break;
+            }
+        }
+
+        int correctGuess = 0;
+        for (int i = 0; i < wordLength; i++) {
+            if (secretWord[i] == guess) {
+                correctGuess = 1;
+                lettersFound++;
+            }
+        }
+        
+        if (!correctGuess) {
+            wrongGuesses++;
+            printf("Wrong guess!\\n");
+        }
+    }
+
+    if (lettersFound == wordLength) {
+        printf("Congratulations! You guessed the word: %s\\n", secretWord);
+    } else {
+        printf("Game over! The word was: %s\\n", secretWord);
+    }
+
+    return 0;
+}`.trim()
+                    }
+                },
+                fa: {
+                    'variables': {
+                        title: 'متغیرها و انواع داده',
+                        filename: 'variables_example.c',
+                        content: `<p>در برنامه‌نویسی، یک <strong>متغیر</strong> یک مکان نام‌گذاری شده در حافظه است که یک مقدار را ذخیره می‌کند. قبل از استفاده از یک متغیر در C، باید آن را تعریف کنید، یعنی نوع و نام آن را مشخص کنید.</p><h4>انواع داده چه هستند؟</h4><p>یک نوع داده به کامپایلر می‌گوید که یک متغیر چه نوع داده‌ای را می‌تواند نگه دارد، که این موضوع اندازه حافظه اختصاص داده شده به آن و عملیاتی که می‌توان روی آن انجام داد را تعیین می‌کند.</p><ul><li><code>int</code>: برای اعداد صحیح (اعداد کامل بدون نقطه اعشار). مثال‌ها: <code>10</code>, <code>-50</code>, <code>0</code>.</li><li><code>float</code>: برای اعداد ممیز شناور با دقت تکی (اعداد با نقطه اعشار). مثال‌ها: <code>3.14</code>, <code>-0.005</code>.</li><li><code>double</code>: برای اعداد ممیز شناور با دقت دوگانه. این نوع دقت بیشتری نسبت به <code>float</code> ارائه می‌دهد و به طور کلی برای اعداد اعشاری توصیه می‌شود.</li><li><code>char</code>: برای یک کاراکتر تنها. مقدار آن در داخل تک کوتیشن قرار می‌گیرد. مثال‌ها: <code>'A'</code>, <code>'b'</code>, <code>'!'</code>.</li></ul><h4>تعریف و مقداردهی اولیه متغیرها</h4><p>تعریف، نوع و نام را مشخص می‌کند. مقداردهی اولیه به آن یک مقدار اولیه می‌دهد. می‌توانید هر دو را همزمان انجام دهید.</p><pre><code>// فقط تعریف\nint myNumber;\n\n// مقداردهی اولیه\nmyNumber = 100;\n\n// تعریف و مقداردهی اولیه\nchar myInitial = 'B';</code></pre><h4>ثوابت</h4><p>اگر متغیری دارید که هرگز نباید تغییر کند، می‌توانید از کلمه کلیدی <code>const</code> برای تبدیل آن به یک ثابت استفاده کنید. تلاش برای تغییر یک ثابت منجر به خطای کامپایلر می‌شود.</p><pre><code>const float PI = 3.14159;</code></pre><p>مثال زیر نحوه تعریف، مقداردهی اولیه و چاپ انواع مختلف متغیرها را نشان می‌دهد.</p>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    int age = 25;
+    double grade = 95.5;
+    char initial = 'B';
+    const float PI = 3.14159;
+    printf("My age is %d.\\n", age);
+    printf("My exam grade was %lf.\\n", grade);
+    printf("My initial is %c.\\n", initial);
+    printf("The value of PI is approximately %f.\\n", PI);
+    return 0;
+}`.trim()
+                    },
+                    'conditionals': {
+                        title: 'دستورات شرطی (if/else/switch)',
+                        filename: 'conditionals_example.c',
+                        content: `<p><strong>دستورات شرطی</strong> ساختارهای تصمیم‌گیری در برنامه‌نویسی هستند. آنها به شما اجازه می‌دهند بلوک‌های مختلفی از کد را بر اساس درست یا غلط بودن یک شرط خاص اجرا کنید.</p><h4>زنجیره <code>if-else if-else</code></h4><p>این رایج‌ترین ساختار شرطی است.<ul><li><code>if</code>: اگر شرط آن درست باشد، کدی را اجرا می‌کند.</li><li><code>else if</code>: اگر <code>if</code> اول نادرست باشد، این یک شرط جدید را بررسی می‌کند. می‌توانید چندین بلوک <code>else if</code> داشته باشید.</li><li><code>else</code>: اگر تمام شرط‌های <code>if</code> و <code>else if</code> قبلی نادرست باشند، این بلوک اجرا می‌شود.</li></ul><h4>عملگرهای منطقی</h4><p>می‌توانید شرایط را با استفاده از عملگرهای منطقی ترکیب کنید:</p><ul><li><code>&&</code> (AND): تنها در صورتی درست است که <strong>هر دو</strong> شرط درست باشند.</li><li><code>||</code> (OR): اگر <strong>حداقل یکی</strong> از شرط‌ها درست باشد، درست است.</li><li><code>!</code> (NOT): مقدار درستی یک شرط را معکوس می‌کند (درست به غلط و غلط به درست تبدیل می‌شود).</li></ul><h4>دستور <code>switch</code></h4><p>دستور <code>switch</code> یک جایگزین خوب برای یک زنجیره طولانی <code>if-else if</code> است، زمانی که یک متغیر تنها را در برابر لیستی از مقادیر ثابت ممکن بررسی می‌کنید.</p>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    int score = 85;
+    char grade;
+
+    if (score >= 90) {
+        grade = 'A';
+    } else if (score >= 80) {
+        grade = 'B';
+    } else if (score >= 70) {
+        grade = 'C';
+    } else {
+        grade = 'F';
+    }
+    printf("Your grade is %c.\\n\\n", grade);
+
+    printf("Based on your grade, here is your feedback:\\n");
+    switch (grade) {
+        case 'A':
+            printf("Excellent work!\\n");
+            break;
+        case 'B':
+            printf("Good job!\\n");
+            break;
+        case 'C':
+            printf("You passed.\\n");
+            break;
+        default:
+            printf("Please see the instructor.\\n");
+            break;
+    }
+
+    return 0;
+}`.trim()
+                    },
+                    'loops': {
+                        title: 'حلقه‌ها (for, while, do-while)',
+                        filename: 'loops_example.c',
+                        content: `<p><strong>حلقه‌ها</strong> به شما اجازه می‌دهند یک بلوک کد را چندین بار تکرار کنید، که این یک اصل اساسی در برنامه‌نویسی است. C سه نوع اصلی حلقه را فراهم می‌کند.</p><h4>حلقه <code>for</code></h4><p>یک حلقه <code>for</code> زمانی ایده‌آل است که از قبل می‌دانید چند بار نیاز به تکرار دارید. این حلقه از سه بخش تشکیل شده است که با نقطه ویرگول از هم جدا شده‌اند:</p><ol><li><strong>مقداردهی اولیه:</strong> یک بار در همان ابتدا اجرا می‌شود. (مثلاً <code>int i = 0</code>)</li><li><strong>شرط:</strong> قبل از هر تکرار بررسی می‌شود. اگر درست باشد، حلقه ادامه می‌یابد. (مثلاً <code>i < 5</code>)</li><li><strong>افزایش/کاهش:</strong> در پایان هر تکرار اجرا می‌شود. (مثلاً <code>i++</code>)</li></ol><h4>حلقه <code>while</code></h4><p>یک حلقه <code>while</code> تا زمانی که شرط آن درست باشد تکرار می‌شود. شرط <strong>قبل</strong> از اجرای بدنه حلقه بررسی می‌شود. اگر شرط در ابتدا نادرست باشد، حلقه هرگز اجرا نخواهد شد.</p><h4>حلقه <code>do-while</code></h4><p>این حلقه شبیه به حلقه <code>while</code> است، اما شرط <strong>بعد</strong> از اجرای بدنه حلقه بررسی می‌شود. این تضمین می‌کند که حلقه حداقل یک بار اجرا خواهد شد.</p><h4><code>break</code> و <code>continue</code></h4><p>می‌توانید حلقه‌ها را با دو کلمه کلیدی دیگر کنترل کنید:</p><ul><li><code>break</code>: فوراً از حلقه فعلی خارج می‌شود.</li><li><code>continue</code>: بقیه تکرار فعلی را نادیده گرفته و به تکرار بعدی می‌پرد.</li></ul>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    printf("--- حلقه For ---\\n");
+    for (int i = 1; i <= 5; i++) {
+        if (i == 4) {
+            continue;
+        }
+        printf("i الان %d است\\n", i);
+    }
+
+    printf("\\n--- حلقه While ---\\n");
+    int countdown = 3;
+    while (countdown > 0) {
+        printf("%d...\\n", countdown);
+        countdown--;
+    }
+    printf("پرتاب!\\n");
+
+    printf("\\n--- حلقه Do-While ---\\n");
+    int input;
+    do {
+        printf("برای خروج عدد 0 را وارد کنید: ");
+        scanf("%d", &input);
+        printf("شما وارد کردید: %d\\n", input);
+    } while (input != 0);
+    printf("از حلقه do-while خارج شدید.\\n");
+
+    return 0;
+}`.trim()
+                    },
+                    'functions': {
+                        title: 'توابع',
+                        filename: 'functions_example.c',
+                        content: `<p>یک <strong>تابع</strong> یک بلوک کد مستقل است که یک وظیفه خاص را انجام می‌دهد. استفاده از توابع یک اصل اساسی برنامه‌نویسی خوب است، زیرا به شما امکان می‌دهد کد خود را ماژولارتر، قابل استفاده مجدد و خواناتر کنید.</p><h4>آناتومی یک تابع</h4><ul><li><strong>نوع بازگشتی:</strong> نوع داده مقداری که تابع باز می‌گرداند. اگر چیزی باز نگرداند، نوع آن <code>void</code> است.</li><li><strong>نام تابع:</strong> یک نام منحصر به فرد برای شناسایی تابع.</li><li><strong>پارامترها (اختیاری):</strong> متغیرهایی که در تعریف تابع لیست شده‌اند و مقادیر ورودی را هنگام فراخوانی تابع می‌پذیرند.</li><li><strong>بدنه تابع:</strong> بلوک کدی که در داخل <code>{}</code> قرار دارد و وظیفه را انجام می‌دهد.</li></ul><h4>اعلان (Prototype) در مقابل تعریف</h4><p>یک <strong>اعلان</strong> تابع، یا <strong>پروتوتایپ</strong>، به کامپایلر در مورد نام، نوع بازگشتی و پارامترهای یک تابع اطلاع می‌دهد. معمولاً در بالای فایل قرار می‌گیرد تا توابع دیگر بتوانند آن را فراخوانی کنند. <strong>تعریف</strong>، کد واقعی داخل تابع است.</p><h4>پارامترها در مقابل آرگومان‌ها</h4><p><strong>پارامترها</strong> متغیرهای موجود در تعریف تابع هستند (مثلاً <code>int a, int b</code>). <strong>آرگومان‌ها</strong> مقادیر واقعی هستند که هنگام فراخوانی تابع به آن ارسال می‌شوند (مثلاً <code>5</code> و <code>3</code> در <code>add(5, 3)</code>).</p>`,
+                        code: `
+#include <stdio.h>
+
+int add(int a, int b);
+void printGreeting(char name[]);
+
+int main() {
+    int sum = add(5, 3); 
+    printf("The sum is %d.\\n", sum);
+    printGreeting("Behrad"); 
+    return 0;
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+
+void printGreeting(char name[]) {
+    printf("Hello, %s! Welcome to the program.\\n", name);
+}`.trim()
+                    },
+                    'guess-the-number': {
+                        title: 'پروژه: حدس عدد',
+                        filename: 'guess_game.c',
+                        content: `<p>این پروژه یک مقدمه عالی برای مفاهیم برنامه‌نویسی است. ما یک بازی می‌سازیم که در آن کامپیوتر به یک عدد فکر می‌کند و بازیکن باید آن را حدس بزند. برنامه راهنمایی‌هایی مانند "بیشتر" یا "کمتر" ارائه می‌دهد.</p><h4>مرحله ۱: کتابخانه‌ها و تنظیمات اولیه</h4><p>ابتدا، باید کتابخانه‌های لازم را اضافه کنیم. <code>stdio.h</code> برای ورودی/خروجی استاندارد (مانند <code>printf</code> و <code>scanf</code>) است. <code>stdlib.h</code> برای تولید اعداد تصادفی (<code>rand</code> و <code>srand</code>) است. <code>time.h</code> برای گرفتن زمان فعلی برای مقداردهی اولیه مولد اعداد تصادفی ما استفاده می‌شود تا هر بار که برنامه را اجرا می‌کنیم متفاوت باشد.</p><h4>مرحله ۲: تولید عدد تصادفی</h4><p>در داخل <code>main</code>، ابتدا باید مولد اعداد تصادفی را "مقداردهی اولیه" کنیم. استفاده از <code>srand(time(0))</code> تضمین می‌کند که دنباله اعداد تصادفی ما هر بار که بازی انجام می‌شود متفاوت باشد. سپس، از <code>rand() % 100 + 1</code> برای گرفتن یک عدد تصادفی بین ۱ تا ۱۰۰ استفاده می‌کنیم.</p><h4>مرحله ۳: حلقه بازی</h4><p>ما به یک حلقه نیاز داریم که تا زمانی که حدس کاربر صحیح نباشد ادامه یابد. یک حلقه <code>while</code> برای این کار عالی است. در داخل حلقه، ما از کاربر درخواست می‌کنیم، ورودی او را با <code>scanf</code> دریافت می‌کنیم، و سپس از یک زنجیره <code>if-else if-else</code> برای مقایسه حدس او با عدد مخفی و ارائه بازخورد استفاده می‌کنیم.</p><p>در زیر کد کامل و نهایی بازی آمده است.</p>`,
+                        code: `
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    srand(time(0)); 
+    int randomNumber = (rand() % 100) + 1; 
+    int userGuess = 0;
+    printf("من یک عدد بین ۱ تا ۱۰۰ انتخاب کرده‌ام.\\n");
+    printf("می‌توانی حدس بزنی چیست؟\\n");
+    while (userGuess != randomNumber) {
+        printf("حدس خود را وارد کنید: ");
+        scanf("%d", &userGuess);
+        if (userGuess > randomNumber) {
+            printf("بیشتر از اینه! دوباره تلاش کن.\\n");
+        } else if (userGuess < randomNumber) {
+            printf("کمتر از اینه! دوباره تلاش کن.\\n");
+        } else {
+            printf("تبریک می‌گم! درست حدس زدی!\\n");
+        }
+    }
+    return 0;
+}`.trim()
+                    },
+                    'tic-tac-toe': {
+                        title: 'پروژه: دوز (XO) در کنسول',
+                        filename: 'tictactoe.c',
+                        content: `<p>این پروژه یک بازی دوز دو نفره می‌سازد که در کنسول اجرا می‌شود. این یک راه عالی برای یادگیری آرایه‌های دو بعدی و تقسیم برنامه به توابع است.</p><h4>مرحله ۱: تنظیمات و صفحه بازی</h4><p>ما صفحه بازی را با استفاده از یک آرایه دو بعدی از نوع char نمایش می‌دهیم. یک آرایه 3x3 عالی است. ما آن را با اعداد '1' تا '9' مقداردهی اولیه می‌کنیم تا به بازیکنان نشان دهیم کدام موقعیت‌ها را می‌توانند انتخاب کنند.</p><h4>مرحله ۲: تابع <code>printBoard</code></h4><p>یک تابع برای چاپ صفحه بازی کد ما را بسیار تمیزتر می‌کند. این تابع آرایه دو بعدی را به عنوان پارامتر می‌گیرد و آن را در یک قالب کاربرپسند چاپ می‌کند.</p><h4>مرحله ۳: حلقه بازی و ورودی بازیکن</h4><p>در <code>main</code>، ما از یک حلقه <code>do-while</code> برای ادامه بازی استفاده خواهیم کرد. در داخل، ما تعیین می‌کنیم نوبت کیست (بازیکن ۱ یا ۲)، انتخاب آنها را با <code>scanf</code> دریافت می‌کنیم و ردیف و ستون مربوطه را برای آرایه محاسبه می‌کنیم. ما همچنین بررسی‌هایی را برای اطمینان از معتبر بودن حرکت اضافه می‌کنیم.</p><h4>مرحله ۴: بررسی برنده</h4><p>این پیچیده‌ترین بخش است. ما به یک تابع به نام <code>checkWin</code> نیاز داریم که تمام شرایط ممکن برای برنده شدن را بررسی کند: هر سه ردیف، هر سه ستون و هر دو قطر. این تابع باید برای برد ۱، برای مساوی ۰ و اگر بازی هنوز ادامه دارد -۱ را برگرداند.</p><p>در زیر کد کامل و نهایی بازی آمده است.</p>`,
+                        code: `
+#include <stdio.h>
+
+void printBoard(char board[3][3]);
+int checkWin(char board[3][3]);
+
+int main() {
+    char board[3][3] = {{'1','2','3'},{'4','5','6'},{'7','8','9'}};
+    int player = 1, choice, i = -1, row, col;
+    char mark;
+    do {
+        printBoard(board);
+        player = (player % 2) ? 1 : 2;
+        mark = (player == 1) ? 'X' : 'O';
+        printf("بازیکن %d، یک عدد وارد کن: ", player);
+        scanf("%d", &choice);
+        row = (choice - 1) / 3;
+        col = (choice - 1) % 3;
+        if (choice < 1 || choice > 9 || board[row][col] == 'X' || board[row][col] == 'O') {
+            printf("حرکت نامعتبر. دوباره تلاش کن.\\n");
+            player--;
+        } else {
+            board[row][col] = mark;
+            i = checkWin(board);
+        }
+    } while (i == -1);
+    printBoard(board);
+    if (i == 1) printf("==> بازیکن %d برنده شد!\\n", player);
+    else printf("==> بازی مساوی شد!\\n");
+    return 0;
+}
+
+void printBoard(char board[3][3]) {
+    printf("\\nبازی دوز\\nبازیکن ۱ (X) - بازیکن ۲ (O)\\n\\n");
+    printf("     |     |     \\n  %c  |  %c  |  %c \\n_____|_____|_____\\n     |     |     \\n  %c  |  %c  |  %c \\n_____|_____|_____\\n     |     |     \\n  %c  |  %c  |  %c \\n     |     |     \\n\\n", board[0][0], board[0][1], board[0][2], board[1][0], board[1][1], board[1][2], board[2][0], board[2][1], board[2][2]);
+}
+
+int checkWin(char board[3][3]) {
+    for (int i = 0; i < 3; i++)
+        if ((board[i][0] == board[i][1] && board[i][1] == board[i][2]) || (board[0][i] == board[1][i] && board[1][i] == board[2][i])) return 1;
+    if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) || (board[0][2] == board[1][1] && board[1][0] == board[2][0])) return 1;
+    for(int i = 0; i < 3; i++)
+        for(int j = 0; j < 3; j++)
+            if(board[i][j] != 'X' && board[i][j] != 'O') return -1;
+    return 0;
+}`.trim()
+                    },
+                     'text-adventure': {
+                        title: 'پروژه: ماجراجویی متنی ساده',
+                        filename: 'adventure.c',
+                        content: `<p>این پروژه یک بازی بسیار ابتدایی "ماجراجویی خودت را انتخاب کن" می‌سازد. این یک راه عالی برای تمرین دستورات تو در توی <code>if-else</code> برای ایجاد مسیرهای انشعابی در داستان شماست.</p><h4>مرحله ۱: اولین انتخاب</h4><p>بازی با ارائه یک سناریو و دو انتخاب به بازیکن شروع می‌شود. ما تصمیم آنها را در یک متغیر صحیح به نام <code>choice1</code> با استفاده از <code>scanf</code> ذخیره می‌کنیم.</p><h4>مرحله ۲: انشعاب با <code>if-else</code></h4><p>ما از یک ساختار بزرگ <code>if-else if-else</code> برای مدیریت اولین انتخاب بازیکن استفاده می‌کنیم. اگر او ۱ را انتخاب کند، بازی با یک نتیجه امن به پایان می‌رسد. اگر ۲ را انتخاب کند، به مرحله بعد می‌رویم. یک <code>else</code> در انتها هر ورودی نامعتبر را مدیریت می‌کند.</p><h4>مرحله ۳: شرط‌های تو در تو برای انتخاب دوم</h4><p>در داخل بلوک <code>else if (choice1 == 2)</code>، ما یک شاخه داستانی تو در توی دیگر ایجاد می‌کنیم. ما یک سناریوی جدید ارائه می‌دهیم و یک ورودی جدید، <code>choice2</code>، دریافت می‌کنیم. یک بلوک <code>if-else</code> دیگر در داخل بلوک اول، نتیجه نهایی این مسیر را تعیین می‌کند.</p><p>این تودرتویی دستورات شرطی است که روایت انشعابی را ایجاد می‌کند. در زیر کد کامل آمده است.</p>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    int choice1, choice2;
+    printf("شما در یک جنگل تاریک بیدار می‌شوید. دو مسیر وجود دارد.\\n");
+    printf("۱. به سمت چپ به سوی یک نور ضعیف بروید.\\n");
+    printf("۲. به سمت راست به سوی یک صدای عجیب بروید.\\n");
+    printf("انتخاب خود را وارد کنید (۱ یا ۲): ");
+    scanf("%d", &choice1);
+
+    if (choice1 == 1) {
+        printf("\\nشما نور را دنبال می‌کنید و یک کلبه کوچک و دنج پیدا می‌کنید.\\n");
+        printf("در داخل، یک آتش گرم در حال سوختن است. شما در امان هستید.\\n");
+        printf("پایان.\\n");
+    } else if (choice1 == 2) {
+        printf("\\nشما به سمت صدا می‌روید و یک اژدهای خفته پیدا می‌کنید!\\n");
+        printf("چه کار می‌کنی؟\\n");
+        printf("۱. سعی کن از کنارش دزدکی رد شوی.\\n");
+        printf("۲. با یک چوب به آن سیخونک بزن.\\n");
+        printf("انتخاب خود را وارد کنید (۱ یا ۲): ");
+        scanf("%d", &choice2);
+        if (choice2 == 1) {
+            printf("\\nشما با موفقیت از کنار اژدها رد می‌شوید و یک صندوق گنج پیدا می‌کنید!\\n");
+            printf("شما برنده شدید!\\n");
+        } else {
+            printf("\\nاژدها بیدار می‌شود و بسیار عصبانی است. شما را می‌خورد.\\n");
+            printf("بازی تمام شد.\\n");
+        }
+    } else {
+        printf("\\nشما بی‌حرکت می‌ایستید و یک گرگ شما را پیدا می‌کند. بازی تمام شد.\\n");
+    }
+    return 0;
+}`.trim()
+                    },
+                    'simple-calculator': {
+                        title: 'پروژه: ماشین حساب ساده',
+                        filename: 'calculator.c',
+                        content: `<p>این پروژه یک ماشین حساب خط فرمان ساده ایجاد می‌کند. این یک راه عالی برای تمرین گرفتن انواع مختلف ورودی کاربر (اعداد و کاراکترها) و استفاده از دستور <code>switch</code> برای مدیریت موارد مختلف است.</p><h4>مرحله ۱: گرفتن ورودی کاربر</h4><p>ما باید سه چیز از کاربر بپرسیم: دو عدد و یک عملگر. ما از <code>double</code> برای اعداد استفاده خواهیم کرد تا امکان استفاده از اعداد اعشاری وجود داشته باشد و از <code>char</code> برای عملگر (+، -، *، /) استفاده می‌کنیم.</p><h4>مرحله ۲: دستور <code>switch</code></h4><p>یک دستور <code>switch</code> برای این کار عالی است. ما مقدار متغیر <code>operator</code> را بررسی می‌کنیم و برای هر عملگر معتبر یک مورد ارائه می‌دهیم. مورد <code>default</code> هر عملگر نامعتبر دیگری را که کاربر ممکن است وارد کند، مدیریت می‌کند.</p><h4>مرحله ۳: مدیریت تقسیم بر صفر</h4><p>در داخل مورد مربوط به تقسیم، مهم است که بررسی کنیم آیا عدد دوم (مقسوم علیه) صفر است یا خیر. تقسیم بر صفر یک عملیات تعریف نشده در ریاضیات است و باعث خطا در برنامه شما می‌شود. ما یک دستور <code>if</code> برای مدیریت این سناریوی خاص به صورت زیبا اضافه می‌کنیم.</p>`,
+                        code: `
+#include <stdio.h>
+
+int main() {
+    char op;
+    double first, second;
+    printf("یک عملگر وارد کنید (+, -, *, /): ");
+    scanf("%c", &op);
+    printf("دو عملوند را وارد کنید: ");
+    scanf("%lf %lf", &first, &second);
+
+    switch (op) {
+    case '+':
+        printf("%.1lf + %.1lf = %.1lf\\n", first, second, first + second);
+        break;
+    case '-':
+        printf("%.1lf - %.1lf = %.1lf\\n", first, second, first - second);
+        break;
+    case '*':
+        printf("%.1lf * %.1lf = %.1lf\\n", first, second, first * second);
+        break;
+    case '/':
+        if (second != 0.0)
+            printf("%.1lf / %.1lf = %.1lf\\n", first, second, first / second);
+        else
+            printf("خطا! تقسیم بر صفر.\\n");
+        break;
+    default:
+        printf("خطا! عملگر صحیح نیست\\n");
+    }
+
+    return 0;
+}`.trim()
+                    },
+                    'rock-paper-scissors': {
+                        title: 'پروژه: سنگ، کاغذ، قیچی',
+                        filename: 'rps.c',
+                        content: `<p>بیایید بازی کلاسیک سنگ، کاغذ، قیچی را در برابر کامپیوتر بسازیم. این پروژه درک شما از تولید اعداد تصادفی و منطق شرطی پیچیده با دستورات <code>if-else</code> را تقویت می‌کند.</p><h4>مرحله ۱: انتخاب کامپیوتر</h4><p>ما از <code>rand()</code> برای تولید یک عدد از ۰ تا ۲ استفاده خواهیم کرد، جایی که ۰ نشان دهنده سنگ، ۱ نشان دهنده کاغذ و ۲ نشان دهنده قیچی است. به یاد داشته باشید که مولد اعداد تصادفی را با <code>srand(time(0))</code> مقداردهی اولیه کنید تا هر بار نتایج متفاوتی بگیرید.</p><h4>مرحله ۲: انتخاب بازیکن</h4><p>ما از بازیکن می‌خواهیم که انتخاب خود را وارد کند. می‌توانیم این را به عنوان یک عدد صحیح یا یک کاراکتر بگیریم. مقایسه یک عدد صحیح اغلب ساده‌تر است.</p><h4>مرحله ۳: تعیین برنده</h4><p>این منطق اصلی است. ما ابتدا تساوی را بررسی می‌کنیم. اگر مساوی نبود، از یک سری دستورات <code>else if</code> برای بررسی تمام شرایط برنده شدن برای بازیکن استفاده می‌کنیم (مثلاً بازیکن سنگ را انتخاب کرده و کامپیوتر قیچی را). اگر هیچ یک از اینها درست نباشد، بازیکن باید باخته باشد.</p>`,
+                        code: `
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int player_choice, comp_choice;
+
+    srand(time(0));
+    comp_choice = rand() % 3;
+
+    printf("انتخاب خود را وارد کنید (۰ برای سنگ، ۱ برای کاغذ، ۲ برای قیچی): ");
+    scanf("%d", &player_choice);
+
+    printf("انتخاب شما: %d\\n", player_choice);
+    printf("انتخاب کامپیوتر: %d\\n", comp_choice);
+
+    if (player_choice == comp_choice) {
+        printf("مساوی شد!\\n");
+    } else if ((player_choice == 0 && comp_choice == 2) ||
+               (player_choice == 1 && comp_choice == 0) ||
+               (player_choice == 2 && comp_choice == 1)) {
+        printf("شما برنده شدید!\\n");
+    } else {
+        printf("کامپیوتر برنده شد!\\n");
+    }
+
+    return 0;
+}`.trim()
+                    },
+                    'contact-book': {
+                        title: 'پروژه: دفترچه تلفن ساده',
+                        filename: 'contacts.c',
+                        content: `<p>این پروژه متوسط دو مفهوم بسیار مهم را معرفی می‌کند: <code>struct</code> برای سازماندهی داده‌ها و ورودی/خروجی فایل برای پایدار کردن آن داده‌ها (ذخیره کردن آن).</p><h4>مرحله ۱: <code>struct</code> مخاطب</h4><p>یک <code>struct</code> (یا ساختار) مجموعه‌ای از متغیرها تحت یک نام واحد است. برای گروه‌بندی داده‌های مرتبط عالی است. ما یک ساختار برای نگهداری نام و شماره تلفن یک مخاطب تعریف خواهیم کرد.</p><h4>مرحله ۲: افزودن مخاطب</h4><p>ما یک تابع ایجاد خواهیم کرد که یک اشاره‌گر به یک ساختار <code>Contact</code> می‌گیرد. این تابع از کاربر می‌خواهد نام و شماره تلفن را وارد کند که در اعضای ساختار ذخیره می‌شوند.</p><h4>مرحله ۳: ذخیره در فایل</h4><p>این کلید مفید کردن برنامه ما است. ما از <code>fopen("contacts.txt", "a")</code> برای باز کردن فایلی به نام "contacts.txt" در حالت <strong>الحاق</strong> استفاده می‌کنیم. حالت الحاق به این معنی است که ما به انتهای فایل اضافه می‌کنیم بدون اینکه محتوای موجود را پاک کنیم. سپس از <code>fprintf</code> (printf فایل) برای نوشتن جزئیات مخاطب در فایل استفاده می‌کنیم و در نهایت، آن را با <code>fclose</code> می‌بندیم. بستن فایل برای اطمینان از ذخیره صحیح داده‌ها بسیار مهم است.</p>`,
+                        code: `
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Contact {
+    char name[50];
+    char phone[15];
+};
+
+int main() {
+    struct Contact newContact;
+    FILE *fp;
+
+    fp = fopen("contacts.txt", "a");
+    if (fp == NULL) {
+        printf("خطا در باز کردن فایل!\\n");
+        return 1;
+    }
+
+    printf("نام را وارد کنید: ");
+    scanf("%s", newContact.name);
+
+    printf("شماره تلفن را وارد کنید: ");
+    scanf("%s", newContact.phone);
+
+    fprintf(fp, "نام: %s، تلفن: %s\\n", newContact.name, newContact.phone);
+
+    fclose(fp);
+
+    printf("مخاطب با موفقیت ذخیره شد!\\n");
+
+    return 0;
+}`.trim()
+                    },
+                    'hangman': {
+                        title: 'پروژه: بازی هنگمن',
+                        filename: 'hangman.c',
+                        content: `<p>این یک پروژه پیشرفته‌تر است که آرایه‌ها، رشته‌ها، حلقه‌ها و منطق پیچیده را برای ایجاد بازی کلاسیک حدس کلمه، هنگمن، ترکیب می‌کند.</p><h4>مرحله ۱: تنظیمات بازی</h4><p>ما به چندین متغیر نیاز داریم: کلمه مخفی، یک آرایه برای نشان دادن پیشرفت بازیکن (در ابتدا با خط تیره پر شده)، تعداد حدس‌های اشتباه مجاز، و یک آرایه برای پیگیری حروفی که قبلاً حدس زده شده‌اند.</p><h4>مرحله ۲: حلقه اصلی بازی</h4><p>بازی تا زمانی ادامه می‌یابد که بازیکن هنوز حدس داشته باشد و کلمه کامل را حدس نزده باشد. یک حلقه <code>while</code> برای این کار عالی است.</p><h4>مرحله ۳: نمایش پیشرفت</h4><p>در داخل حلقه، ما ابتدا وضعیت فعلی کلمه (مثلاً <code>_ P P _ _</code>) و تعداد حدس‌های اشتباه باقی‌مانده را چاپ می‌کنیم.</p><h4>مرحله ۴: مدیریت یک حدس</h4><p>ما یک حدس کاراکتری از بازیکن دریافت می‌کنیم. سپس در کلمه مخفی حلقه می‌زنیم. اگر حرف حدس زده شده پیدا شد، آرایه نمایش خود را در موقعیت‌های صحیح به‌روز می‌کنیم. ما همچنین یک پرچم برای دانستن اینکه حدس درست بوده است تنظیم می‌کنیم. اگر پرچم پس از بررسی کل کلمه هنوز نادرست باشد، حدس اشتباه بوده و ما جان‌های باقی‌مانده را کاهش می‌دهیم.</p><h4>مرحله ۵: شرط برد/باخت</h4><p>پس از پایان حلقه، ما بررسی می‌کنیم که چرا به پایان رسیده است. اگر بازیکن دیگر جانی نداشته باشد، می‌بازد. در غیر این صورت، او باید کلمه را حدس زده باشد و برنده می‌شود!</p>`,
+                        code: `
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main() {
+    char secretWord[] = "apple";
+    int wordLength = strlen(secretWord);
+    char guessedLetters[26] = {0};
+    int wrongGuesses = 0;
+    const int MAX_WRONG_GUESSES = 6;
+    int lettersFound = 0;
+
+    printf("به بازی هنگمن خوش آمدید!\\n");
+
+    while (wrongGuesses < MAX_WRONG_GUESSES && lettersFound < wordLength) {
+        for (int i = 0; i < wordLength; i++) {
+            int found = 0;
+            for (int j = 0; j < 26; j++) {
+                if (guessedLetters[j] == secretWord[i]) {
+                    printf("%c ", secretWord[i]);
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found) {
+                printf("_ ");
+            }
+        }
+        printf("\\n");
+
+        char guess;
+        printf("حدس‌های باقی‌مانده: %d\\nیک حرف وارد کنید: ", MAX_WRONG_GUESSES - wrongGuesses);
+        scanf(" %c", &guess);
+
+        int alreadyGuessed = 0;
+        for(int i = 0; i < 26; i++) {
+            if(guessedLetters[i] == guess) {
+                printf("شما قبلاً این حرف را حدس زده‌اید.\\n");
+                alreadyGuessed = 1;
+                break;
+            }
+        }
+        if(alreadyGuessed) continue;
+
+        for(int i=0; i<26; i++){
+            if(guessedLetters[i] == 0){
+                guessedLetters[i] = guess;
+                break;
+            }
+        }
+
+        int correctGuess = 0;
+        for (int i = 0; i < wordLength; i++) {
+            if (secretWord[i] == guess) {
+                correctGuess = 1;
+                lettersFound++;
+            }
+        }
+        
+        if (!correctGuess) {
+            wrongGuesses++;
+            printf("حدس اشتباه!\\n");
+        }
+    }
+
+    if (lettersFound == wordLength) {
+        printf("تبریک! شما کلمه را حدس زدید: %s\\n", secretWord);
+    } else {
+        printf("بازی تمام شد! کلمه بود: %s\\n", secretWord);
+    }
+
+    return 0;
+}`.trim()
+                    }
+                }
+            };
+
+            // --- DOM Elements ---
+            const mainContent = document.getElementById('main-content');
+            const tutorialView = document.getElementById('tutorial-view');
+            const conceptCards = document.querySelectorAll('[data-concept]');
+            const tutorialButtons = document.querySelectorAll('.tutorial-btn');
+            const backButton = document.getElementById('back-to-main');
+            
+            const tutorialTitle = document.getElementById('tutorial-title');
+            const tutorialContent = document.getElementById('tutorial-content');
+            const tutorialFilename = document.getElementById('tutorial-filename');
+            const tutorialCodeBlock = document.getElementById('tutorial-code-block');
+            
+            const langSwitcher = document.getElementById('lang-switcher');
+            let currentLang = 'en';
+
+            // --- Functions ---
+            function showArticle(data) {
+                tutorialTitle.innerHTML = `<span class="lang en">${data.en.title}</span><span class="lang fa hidden">${data.fa.title}</span>`;
+                tutorialContent.innerHTML = `<div class="lang en">${data.en.content}</div><div class="lang fa hidden">${data.fa.content}</div>`;
+                tutorialFilename.textContent = data.en.filename;
+                tutorialCodeBlock.textContent = data.en.code;
+                
+                mainContent.classList.add('hidden');
+                tutorialView.classList.remove('hidden');
+                window.scrollTo(0, 0);
+                updateLanguageUI();
+            }
+
+            function showMainContent() {
+                tutorialView.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
+            
+            function copyCodeToClipboard(codeElement, buttonElement) {
+                const textArea = document.createElement('textarea');
+                textArea.value = codeElement.innerText;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    const textEn = buttonElement.querySelector('.lang.en');
+                    const textFa = buttonElement.querySelector('.lang.fa');
+                    if(textEn) textEn.textContent = 'Copied!';
+                    if(textFa) textFa.textContent = 'کپی شد!';
+
+                    const iconElement = buttonElement.querySelector('.copy-icon');
+                    if (iconElement) {
+                        iconElement.outerHTML = feather.icons['check'].toSvg({'class': 'w-4 h-4 copy-icon'});
+                    }
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                
+                document.body.removeChild(textArea);
+
+                setTimeout(() => {
+                    const textEn = buttonElement.querySelector('.lang.en');
+                    const textFa = buttonElement.querySelector('.lang.fa');
+                    if(textEn) textEn.textContent = 'Copy';
+                    if(textFa) textFa.textContent = 'کپی';
+
+                    const currentIcon = buttonElement.querySelector('.copy-icon');
+                    if (currentIcon) {
+                        currentIcon.outerHTML = feather.icons['copy'].toSvg({'class': 'w-4 h-4 copy-icon'});
+                    }
+                }, 2000);
+            }
+
+            function updateLanguageUI() {
+                const isRTL = currentLang === 'fa';
+                document.documentElement.lang = currentLang;
+                document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+                document.body.dir = isRTL ? 'rtl' : 'ltr';
+
+                langSwitcher.textContent = isRTL ? 'EN' : 'FA';
+
+                document.querySelectorAll('.lang').forEach(el => {
+                    if (el.classList.contains(currentLang)) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                });
+            }
+
+            // --- Initial Setup and Event Listeners ---
+            feather.replace();
+
+            conceptCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const conceptName = card.dataset.concept;
+                    const data = {
+                        en: contentData.en[conceptName],
+                        fa: contentData.fa[conceptName]
+                    };
+                    showArticle(data);
+                });
+            });
+
+            tutorialButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const projectName = button.dataset.project;
+                    const data = {
+                        en: contentData.en[projectName],
+                        fa: contentData.fa[projectName]
+                    };
+                    showArticle(data);
+                });
+            });
+
+            backButton.addEventListener('click', () => {
+                showMainContent();
+            });
+
+            document.getElementById('tutorial-copy-btn').addEventListener('click', (e) => {
+                copyCodeToClipboard(tutorialCodeBlock, e.currentTarget);
+            });
+            
+            document.getElementById('copy-btn').addEventListener('click', (e) => {
+                copyCodeToClipboard(codeBlock, e.currentTarget);
+            });
+
+            langSwitcher.addEventListener('click', () => {
+                currentLang = currentLang === 'en' ? 'fa' : 'en';
+                updateLanguageUI();
+            });
+            
+            // Initial UI update
+            updateLanguageUI();
+        };
+    </script>
+</body>
+</html>
